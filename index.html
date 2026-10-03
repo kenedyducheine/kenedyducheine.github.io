@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kenedy Ducheine</title>
+  <meta name="description" content="Kenedy Ducheine: student at Georgetown, maker of azine, a weekly recommendation board for essays, movies, albums and novels.">
+  <meta property="og:title" content="Kenedy Ducheine">
+  <meta property="og:description" content="Student at Georgetown. Making azine.">
+  <meta property="og:image" content="https://kenedyducheine.github.io/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    /* The look is azine's (azine.io): same colors, fonts and handwriting.
+       Change things here; everything below uses these. */
+    :root {
+      --bg: #c9c3a6;            /* the page */
+      --paper: #c9c3a5;         /* the note's grid paper */
+      --ink: #36111a;           /* text */
+      --muted: #8f8a80;         /* labels, dates, credits */
+      --line: #628b48;          /* thin lines */
+      --red: #c00a0a;           /* the A */
+      --overlay-bg: rgba(10, 12, 11, 0.86);
+      --overlay-text: #fff;
+      --wall-gap: 10px;
+      --topbar: 58px;
+      --font-main: "Google Sans", system-ui, sans-serif;
+      --font-labels: "IBM Plex Mono", ui-monospace, monospace;
+      --font-hand: "Azine Hand", var(--font-labels);
+    }
+
+    @font-face {
+      font-family: "Azine Hand";
+      src: url("assets/fonts/azine-hand.woff2") format("woff2");
+      font-display: swap;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--topbar); }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 16px/1.6 var(--font-main);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    img { display: block; }
+
+    .label {
+      font: 500 0.7rem/1.4 var(--font-labels);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+    }
+    .hand {
+      font-family: var(--font-hand);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      -webkit-text-stroke: 0.25px currentColor;
+      font-weight: 400;
+    }
+
+    /* ----- top bar: the A, today's date, links ----- */
+    .topbar {
+      position: fixed; inset: 0 0 auto; z-index: 10;
+      height: var(--topbar);
+      display: flex; align-items: center; gap: 14px;
+      padding: 0 16px;
+      background: var(--bg);
+    }
+    .topbar .a { height: 36px; width: auto; }
+    .topbar .date { color: var(--muted); font-size: 1.05rem; }
+    .topbar nav { margin-left: auto; display: flex; gap: 22px; }
+    .topbar nav a {
+      font: 400 0.95rem var(--font-labels);
+      text-decoration: none;
+    }
+    .topbar nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* ----- the wall of art, with the note on top ----- */
+    .hero {
+      display: block;
+      position: relative;
+      height: 100vh; height: 100svh;
+      min-height: 560px;
+      padding-top: var(--topbar);
+      overflow: hidden;
+    }
+    .wall {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--wall-gap);
+    }
+    .tile {
+      position: relative; margin: 0;
+      aspect-ratio: 1;
+      overflow: hidden;
+      opacity: 0;
+      animation: tile-in 0.9s ease forwards;
+      animation-delay: calc(var(--i) * 35ms);
+    }
+    .tile img { width: 100%; height: 100%; object-fit: cover; }
+    .tile figcaption {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: flex-end; gap: 2px;
+      padding: 14px;
+      background: var(--overlay-bg); color: var(--overlay-text);
+      font-size: 0.85rem; line-height: 1.3;
+      opacity: 0; transition: opacity 0.25s ease;
+    }
+    .tile figcaption .label { color: rgba(255, 255, 255, 0.6); }
+    .tile:hover figcaption { opacity: 1; }
+    @keyframes tile-in { to { opacity: 1; } }
+
+    .note {
+      position: absolute; left: 50%; top: 54%; z-index: 2;
+      width: min(560px, calc(100vw - 32px));
+      padding: 34px 38px 30px;
+      background: var(--paper) url("assets/paper-tile.jpg") repeat 0 0 / 44px auto;
+      box-shadow: 0 22px 50px rgba(20, 24, 22, 0.35);
+      transform: translate(-50%, -50%) rotate(-1.6deg);
+      opacity: 0;
+      animation: note-in 0.9s ease 0.9s forwards;
+    }
+    @keyframes note-in {
+      from { opacity: 0; transform: translate(-50%, -46%) rotate(0deg); }
+      to { opacity: 1; transform: translate(-50%, -50%) rotate(-1.6deg); }
+    }
+    .note h1 { margin: 0 0 14px; font-size: 2.3rem; line-height: 1.1; color: #341011; }
+    .note p { margin: 0 0 22px; font-size: 1.05rem; }
+    .note .links { display: flex; flex-wrap: wrap; gap: 10px 26px; }
+    .note .links a { font: 500 0.75rem var(--font-labels); letter-spacing: 0.2em; text-transform: uppercase; text-underline-offset: 4px; }
+
+    /* ----- the showcases: details left, cover middle, words right (like azine's board) ----- */
+    section { padding: 72px 40px 24px; }
+    .screen-label { font-size: 1.6rem; margin: 0 0 8px; }
+    .show {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(0, 1.25fr) minmax(220px, 1fr);
+      align-items: center; gap: 48px;
+      min-height: 76vh;
+      padding: 48px 0;
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 35%, transparent);
+    }
+    .show:last-child { border-bottom: 0; }
+    .show-details dl {
+      display: grid; grid-template-columns: max-content 1fr; gap: 6px 26px;
+      margin: 18px 0 22px; align-items: baseline;
+    }
+    .show-details dt { color: var(--muted); font-size: 1.02rem; }
+    .show-details dd { margin: 0; font-size: 0.95rem; }
+    .show-details h3 {
+      margin: 0 0 18px;
+      font: 400 clamp(1.6rem, 2.4vw, 2.2rem)/1.15 var(--font-main);
+      text-transform: uppercase;
+    }
+    .open { font: 500 0.75rem var(--font-labels); letter-spacing: 0.2em; text-transform: uppercase; text-underline-offset: 4px; }
+    .open.soon { color: var(--muted); }
+
+    .show-cover { justify-self: center; display: block; }
+    .show-cover img {
+      max-width: 100%; max-height: 56vh; width: auto; height: auto;
+      box-shadow: 0 18px 40px rgba(20, 24, 22, 0.22);
+      transform: rotate(var(--tilt, -2deg));
+      transition: transform 0.6s ease;
+    }
+    .show:nth-child(even) .show-cover img { --tilt: 1.8deg; }
+    a.show-cover:hover img { transform: rotate(0deg) scale(1.02); }
+
+    .show-text { text-align: center; max-width: 380px; justify-self: center; }
+    .show-text p { margin: 10px 0 0; }
+    .show-text .rule { display: block; width: 18px; height: 1px; background: var(--ink); margin: 18px auto 12px; }
+    .show-text .credit { color: var(--muted); font-size: 0.85rem; }
+
+    /* things slide in as you reach them */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.seen { opacity: 1; transform: none; }
+    .reveal:not(.seen) .show-cover img { transform: rotate(0deg) translateY(20px); }
+
+    /* ----- footer ----- */
+    footer {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px;
+      padding: 56px 40px 40px;
+    }
+    footer .thanks { font-size: 1.5rem; margin: 0; }
+
+    @media (max-width: 860px) {
+      .topbar .date { display: none; }
+      .topbar nav { gap: 16px; }
+      .wall { grid-template-columns: repeat(4, 1fr); }
+      section { padding: 56px 16px 8px; }
+      .show { grid-template-columns: 1fr; gap: 26px; min-height: 0; padding: 40px 0; }
+      .show-cover { order: -1; }
+      .show-cover img { max-height: 50vh; }
+      .show-text { text-align: left; justify-self: start; }
+      .show-text .rule { margin-left: 0; }
+      footer { padding: 40px 16px 32px; }
+      .note { padding: 28px 24px 24px; }
+      .note h1 { font-size: 1.9rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .tile, .note, .reveal { opacity: 1; }
+      .reveal { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="#top" aria-label="Back to the top"><img class="a" src="assets/a.png" alt="A"></a>
+    <span class="date hand" id="date"></span>
+    <nav>
+      <a href="#projects">projects</a>
+      <a href="https://azine.io">azine.io</a>
+      <a href="https://github.com/kenedyducheine">github</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- The wall: the same public-domain works from the Met that open azine.io -->
+    <div class="hero">
+      <div class="wall" aria-label="Art from The Metropolitan Museum of Art">
+      <figure class="tile" style="--i:0">
+        <img src="assets/art/45434-s.webp" alt="The Great Wave off Kanagawa, Katsushika Hokusai, ca. 1830–32" loading="eager">
+        <figcaption><span class="label">ca. 1830–32</span><strong>The Great Wave off Kanagawa</strong><span>Katsushika Hokusai</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:1">
+        <img src="assets/art/437881-s.webp" alt="Young Woman with a Water Pitcher, Johannes Vermeer, ca. 1662" loading="eager">
+        <figcaption><span class="label">ca. 1662</span><strong>Young Woman with a Water Pitcher</strong><span>Johannes Vermeer</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:2">
+        <img src="assets/art/438822-s.webp" alt="The Repast of the Lion, Henri Rousseau, ca. 1907" loading="eager">
+        <figcaption><span class="label">ca. 1907</span><strong>The Repast of the Lion</strong><span>Henri Rousseau</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:3">
+        <img src="assets/art/435809-s.webp" alt="The Harvesters, Pieter Bruegel the Elder, 1565" loading="eager">
+        <figcaption><span class="label">1565</span><strong>The Harvesters</strong><span>Pieter Bruegel the Elder</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:4">
+        <img src="assets/art/544227-s.webp" alt="Hippopotamus (“William”), Egypt, Middle Kingdom, ca. 1961–1878 B.C." loading="eager">
+        <figcaption><span class="label">ca. 1961–1878 B.C.</span><strong>Hippopotamus (“William”)</strong><span>Egypt, Middle Kingdom</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:5">
+        <img src="assets/art/436819-s.webp" alt="Mäda Primavesi, Gustav Klimt, 1912–13" loading="eager">
+        <figcaption><span class="label">1912–13</span><strong>Mäda Primavesi</strong><span>Gustav Klimt</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:6">
+        <img src="assets/art/437654-s.webp" alt="Circus Sideshow, Georges Seurat, 1887–88" loading="eager">
+        <figcaption><span class="label">1887–88</span><strong>Circus Sideshow</strong><span>Georges Seurat</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:7">
+        <img src="assets/art/39664-s.webp" alt="Irises at Yatsuhashi (Eight Bridges), Ogata Kōrin, after 1709" loading="eager">
+        <figcaption><span class="label">after 1709</span><strong>Irises at Yatsuhashi (Eight Bridges)</strong><span>Ogata Kōrin</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:8">
+        <img src="assets/art/12127-s.webp" alt="Madame X, John Singer Sargent, 1883–84" loading="eager">
+        <figcaption><span class="label">1883–84</span><strong>Madame X</strong><span>John Singer Sargent</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:9">
+        <img src="assets/art/437854-s.webp" alt="Whalers, J. M. W. Turner, ca. 1845" loading="eager">
+        <figcaption><span class="label">ca. 1845</span><strong>Whalers</strong><span>J. M. W. Turner</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:10">
+        <img src="assets/art/453183-s.webp" alt="The House of Bijapur, Kamal Muhammad, ca. 1680" loading="eager">
+        <figcaption><span class="label">ca. 1680</span><strong>The House of Bijapur</strong><span>Kamal Muhammad</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:11">
+        <img src="assets/art/435868-s.webp" alt="The Card Players, Paul Cézanne, 1890–92" loading="eager">
+        <figcaption><span class="label">1890–92</span><strong>The Card Players</strong><span>Paul Cézanne</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:12">
+        <img src="assets/art/438417-s.webp" alt="Two Men Contemplating the Moon, Caspar David Friedrich, ca. 1825–30" loading="eager">
+        <figcaption><span class="label">ca. 1825–30</span><strong>Two Men Contemplating the Moon</strong><span>Caspar David Friedrich</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:13">
+        <img src="assets/art/436545-s.webp" alt="Manuel Osorio Manrique de Zuñiga, Francisco de Goya, 1787–88" loading="eager">
+        <figcaption><span class="label">1787–88</span><strong>Manuel Osorio Manrique de Zuñiga</strong><span>Francisco de Goya</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:14">
+        <img src="assets/art/55433-s.webp" alt="Sudden Shower over Shin-Ōhashi Bridge and Atake, Utagawa Hiroshige, 1857" loading="eager">
+        <figcaption><span class="label">1857</span><strong>Sudden Shower over Shin-Ōhashi Bridge and Atake</strong><span>Utagawa Hiroshige</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:15">
+        <img src="assets/art/435702-s.webp" alt="The Horse Fair, Rosa Bonheur, 1852–55" loading="eager">
+        <figcaption><span class="label">1852–55</span><strong>The Horse Fair</strong><span>Rosa Bonheur</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:16">
+        <img src="assets/art/435844-s.webp" alt="The Musicians, Caravaggio, 1597" loading="eager">
+        <figcaption><span class="label">1597</span><strong>The Musicians</strong><span>Caravaggio</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:17">
+        <img src="assets/art/11122-s.webp" alt="The Gulf Stream, Winslow Homer, 1899" loading="eager">
+        <figcaption><span class="label">1899</span><strong>The Gulf Stream</strong><span>Winslow Homer</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:18">
+        <img src="assets/art/447807-s.webp" alt="The Great Abu Sa’ud Teaching Law, Mahmud ’Abd al-Baqi (Divan of Baqi), mid-16th century" loading="eager">
+        <figcaption><span class="label">mid-16th century</span><strong>The Great Abu Sa’ud Teaching Law</strong><span>Mahmud ’Abd al-Baqi (Divan of Baqi)</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:19">
+        <img src="assets/art/438817-s.webp" alt="The Dance Class, Edgar Degas, 1874" loading="eager">
+        <figcaption><span class="label">1874</span><strong>The Dance Class</strong><span>Edgar Degas</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:20">
+        <img src="assets/art/436535-s.webp" alt="Wheat Field with Cypresses, Vincent van Gogh, 1889" loading="eager">
+        <figcaption><span class="label">1889</span><strong>Wheat Field with Cypresses</strong><span>Vincent van Gogh</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:21">
+        <img src="assets/art/436838-s.webp" alt="The Fortune-Teller, Georges de La Tour, probably 1630s" loading="eager">
+        <figcaption><span class="label">probably 1630s</span><strong>The Fortune-Teller</strong><span>Georges de La Tour</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:22">
+        <img src="assets/art/10154-s.webp" alt="The Rocky Mountains, Lander’s Peak, Albert Bierstadt, 1863" loading="eager">
+        <figcaption><span class="label">1863</span><strong>The Rocky Mountains, Lander’s Peak</strong><span>Albert Bierstadt</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:23">
+        <img src="assets/art/437835-s.webp" alt="The Englishman at the Moulin Rouge, Henri de Toulouse-Lautrec, 1892" loading="eager">
+        <figcaption><span class="label">1892</span><strong>The Englishman at the Moulin Rouge</strong><span>Henri de Toulouse-Lautrec</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:24">
+        <img src="assets/art/436947-s.webp" alt="Boating, Édouard Manet, 1874" loading="lazy">
+        <figcaption><span class="label">1874</span><strong>Boating</strong><span>Édouard Manet</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:25">
+        <img src="assets/art/459080-s.webp" alt="Erasmus of Rotterdam, Hans Holbein the Younger, ca. 1532" loading="lazy">
+        <figcaption><span class="label">ca. 1532</span><strong>Erasmus of Rotterdam</strong><span>Hans Holbein the Younger</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:26">
+        <img src="assets/art/436105-s.webp" alt="The Death of Socrates, Jacques Louis David, 1787" loading="lazy">
+        <figcaption><span class="label">1787</span><strong>The Death of Socrates</strong><span>Jacques Louis David</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:27">
+        <img src="assets/art/438815-s.webp" alt="Madame Georges Charpentier and Her Children, Auguste Renoir, 1878" loading="lazy">
+        <figcaption><span class="label">1878</span><strong>Madame Georges Charpentier and Her Children</strong><span>Auguste Renoir</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:28" aria-hidden="true">
+        <img src="assets/art/55433-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1857</span><strong>Sudden Shower over Shin-Ōhashi Bridge and Atake</strong><span>Utagawa Hiroshige</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:29" aria-hidden="true">
+        <img src="assets/art/435702-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1852–55</span><strong>The Horse Fair</strong><span>Rosa Bonheur</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:30" aria-hidden="true">
+        <img src="assets/art/435844-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1597</span><strong>The Musicians</strong><span>Caravaggio</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:31" aria-hidden="true">
+        <img src="assets/art/11122-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1899</span><strong>The Gulf Stream</strong><span>Winslow Homer</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:32" aria-hidden="true">
+        <img src="assets/art/447807-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">mid-16th century</span><strong>The Great Abu Sa’ud Teaching Law</strong><span>Mahmud ’Abd al-Baqi (Divan of Baqi)</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:33" aria-hidden="true">
+        <img src="assets/art/438817-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1874</span><strong>The Dance Class</strong><span>Edgar Degas</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:34" aria-hidden="true">
+        <img src="assets/art/436535-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1889</span><strong>Wheat Field with Cypresses</strong><span>Vincent van Gogh</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:35" aria-hidden="true">
+        <img src="assets/art/436838-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">probably 1630s</span><strong>The Fortune-Teller</strong><span>Georges de La Tour</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:36" aria-hidden="true">
+        <img src="assets/art/10154-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1863</span><strong>The Rocky Mountains, Lander’s Peak</strong><span>Albert Bierstadt</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:37" aria-hidden="true">
+        <img src="assets/art/437835-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1892</span><strong>The Englishman at the Moulin Rouge</strong><span>Henri de Toulouse-Lautrec</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:38" aria-hidden="true">
+        <img src="assets/art/436947-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1874</span><strong>Boating</strong><span>Édouard Manet</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:39" aria-hidden="true">
+        <img src="assets/art/459080-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1532</span><strong>Erasmus of Rotterdam</strong><span>Hans Holbein the Younger</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436105-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1787</span><strong>The Death of Socrates</strong><span>Jacques Louis David</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/438815-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1878</span><strong>Madame Georges Charpentier and Her Children</strong><span>Auguste Renoir</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/45434-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1830–32</span><strong>The Great Wave off Kanagawa</strong><span>Katsushika Hokusai</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/437881-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1662</span><strong>Young Woman with a Water Pitcher</strong><span>Johannes Vermeer</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/438822-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1907</span><strong>The Repast of the Lion</strong><span>Henri Rousseau</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/435809-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1565</span><strong>The Harvesters</strong><span>Pieter Bruegel the Elder</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/544227-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1961–1878 B.C.</span><strong>Hippopotamus (“William”)</strong><span>Egypt, Middle Kingdom</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436819-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1912–13</span><strong>Mäda Primavesi</strong><span>Gustav Klimt</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/437654-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1887–88</span><strong>Circus Sideshow</strong><span>Georges Seurat</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/39664-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">after 1709</span><strong>Irises at Yatsuhashi (Eight Bridges)</strong><span>Ogata Kōrin</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/12127-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1883–84</span><strong>Madame X</strong><span>John Singer Sargent</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/437854-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1845</span><strong>Whalers</strong><span>J. M. W. Turner</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/453183-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1680</span><strong>The House of Bijapur</strong><span>Kamal Muhammad</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/435868-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1890–92</span><strong>The Card Players</strong><span>Paul Cézanne</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/438417-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1825–30</span><strong>Two Men Contemplating the Moon</strong><span>Caspar David Friedrich</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436545-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1787–88</span><strong>Manuel Osorio Manrique de Zuñiga</strong><span>Francisco de Goya</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436819-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1912–13</span><strong>Mäda Primavesi</strong><span>Gustav Klimt</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/437654-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1887–88</span><strong>Circus Sideshow</strong><span>Georges Seurat</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/39664-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">after 1709</span><strong>Irises at Yatsuhashi (Eight Bridges)</strong><span>Ogata Kōrin</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/12127-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1883–84</span><strong>Madame X</strong><span>John Singer Sargent</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/437854-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1845</span><strong>Whalers</strong><span>J. M. W. Turner</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/453183-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1680</span><strong>The House of Bijapur</strong><span>Kamal Muhammad</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/435868-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1890–92</span><strong>The Card Players</strong><span>Paul Cézanne</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/438417-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1825–30</span><strong>Two Men Contemplating the Moon</strong><span>Caspar David Friedrich</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436545-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1787–88</span><strong>Manuel Osorio Manrique de Zuñiga</strong><span>Francisco de Goya</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/55433-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1857</span><strong>Sudden Shower over Shin-Ōhashi Bridge and Atake</strong><span>Utagawa Hiroshige</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/435702-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1852–55</span><strong>The Horse Fair</strong><span>Rosa Bonheur</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/435844-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1597</span><strong>The Musicians</strong><span>Caravaggio</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/11122-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1899</span><strong>The Gulf Stream</strong><span>Winslow Homer</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/447807-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">mid-16th century</span><strong>The Great Abu Sa’ud Teaching Law</strong><span>Mahmud ’Abd al-Baqi (Divan of Baqi)</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/438817-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1874</span><strong>The Dance Class</strong><span>Edgar Degas</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436535-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1889</span><strong>Wheat Field with Cypresses</strong><span>Vincent van Gogh</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436838-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">probably 1630s</span><strong>The Fortune-Teller</strong><span>Georges de La Tour</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/10154-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1863</span><strong>The Rocky Mountains, Lander’s Peak</strong><span>Albert Bierstadt</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/437835-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1892</span><strong>The Englishman at the Moulin Rouge</strong><span>Henri de Toulouse-Lautrec</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436947-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1874</span><strong>Boating</strong><span>Édouard Manet</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/459080-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1532</span><strong>Erasmus of Rotterdam</strong><span>Hans Holbein the Younger</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/436105-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1787</span><strong>The Death of Socrates</strong><span>Jacques Louis David</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/438815-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1878</span><strong>Madame Georges Charpentier and Her Children</strong><span>Auguste Renoir</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/45434-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1830–32</span><strong>The Great Wave off Kanagawa</strong><span>Katsushika Hokusai</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/437881-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1662</span><strong>Young Woman with a Water Pitcher</strong><span>Johannes Vermeer</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/438822-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1907</span><strong>The Repast of the Lion</strong><span>Henri Rousseau</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/435809-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">1565</span><strong>The Harvesters</strong><span>Pieter Bruegel the Elder</span></figcaption>
+      </figure>
+      <figure class="tile" style="--i:40" aria-hidden="true">
+        <img src="assets/art/544227-s.webp" alt="" loading="lazy">
+        <figcaption><span class="label">ca. 1961–1878 B.C.</span><strong>Hippopotamus (“William”)</strong><span>Egypt, Middle Kingdom</span></figcaption>
+      </figure>
+      </div>
+
+      <div class="note">
+        <h1 class="hand">Hi, I'm Kenedy</h1>
+        <p>I'm a student at Georgetown. I make <a href="https://azine.io">azine</a>, a weekly
+          recommendation board for essays, movies, albums and novels, for people who would rather
+          discover things than be fed them.</p>
+        <div class="links">
+          <a href="https://azine.io">See azine&nbsp;↗</a>
+          <a href="#projects">Projects&nbsp;↓</a>
+          <a href="https://github.com/kenedyducheine">GitHub&nbsp;↗</a>
+        </div>
+      </div>
+    </div>
+
+    <section id="making">
+      <h2 class="screen-label hand">Making</h2>
+      <article class="show reveal">
+        <div class="show-details">
+          <p class="label">Now</p>
+          <dl>
+            <dt class="hand">what</dt><dd>A weekly recommendation board</dd>
+            <dt class="hand">for</dt><dd>Essays, movies, albums, novels</dd>
+            <dt class="hand">with</dt><dd>Python, FastAPI, the Claude API</dd>
+          </dl>
+          <h3>azine</h3>
+          <a class="open" href="https://azine.io">Open&nbsp;↗</a>
+        </div>
+        <a class="show-cover" href="https://azine.io" aria-label="azine">
+          <img src="assets/azine-landing.jpg" alt="azine's landing page: a wall of paintings from the Met" loading="lazy">
+        </a>
+        <div class="show-text">
+          <p class="label">Better for your brain</p>
+          <p>Feeds are built to keep you scrolling, not to help you find anything good. azine starts
+            from a few sentences about what you love and don't, suggests a handful of things each
+            week, mostly from before 2021, and learns from how you sort them. No influencers,
+            no AI slop.</p>
+          <span class="rule"></span>
+          <p class="credit">azine.io</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="projects">
+      <h2 class="screen-label hand">Projects</h2>
+    <article class="show reveal" id="crime">
+      <div class="show-details">
+        <p class="label">Project 01</p>
+        <dl>
+          <dt class="hand">about</dt><dd>Point processes</dd>
+          <dt class="hand">made</dt><dd>2026</dd>
+          <dt class="hand">with</dt><dd>Python, R</dd>
+        </dl>
+        <h3>Statistical Crime Analysis</h3>
+        <a class="open" href="https://github.com/kenedyducheine/statistical-crime-analysis">Open&nbsp;↗</a>
+      </div>
+      <a class="show-cover" href="https://github.com/kenedyducheine/statistical-crime-analysis" aria-label="Statistical Crime Analysis">
+        <img src="assets/art/55433.webp" alt="Sudden Shower over Shin-Ōhashi Bridge and Atake, Utagawa Hiroshige, 1857" loading="lazy">
+      </a>
+      <div class="show-text">
+        <p class="label">Point processes</p>
+        <p>Is crime contagious, or does it cluster where the underlying conditions are worse? We tested a paper&#x27;s claim about Hawkes processes against log-Gaussian Cox processes, with our own regressions on crime data from Chicago and Vancouver.</p>
+        <span class="rule"></span>
+        <p class="credit">Sudden Shower over Shin-Ōhashi Bridge and Atake, Utagawa Hiroshige, 1857</p>
+      </div>
+    </article>
+    <article class="show reveal" id="reed-muller">
+      <div class="show-details">
+        <p class="label">Project 02</p>
+        <dl>
+          <dt class="hand">about</dt><dd>Coding theory</dd>
+          <dt class="hand">made</dt><dd>2025</dd>
+          <dt class="hand">with</dt><dd>Python</dd>
+        </dl>
+        <h3>Reed-Muller Codes</h3>
+        <a class="open" href="https://github.com/kenedyducheine/coding-theory-final-project">Open&nbsp;↗</a>
+      </div>
+      <a class="show-cover" href="https://github.com/kenedyducheine/coding-theory-final-project" aria-label="Reed-Muller Codes">
+        <img src="assets/art/437654.webp" alt="Circus Sideshow, Georges Seurat, 1887–88" loading="lazy">
+      </a>
+      <div class="show-text">
+        <p class="label">Coding theory</p>
+        <p>Encoding and decoding messages with Reed-Muller error-correcting codes, and watching how well they hold up as the channel gets noisier.</p>
+        <span class="rule"></span>
+        <p class="credit">Circus Sideshow, Georges Seurat, 1887–88</p>
+      </div>
+    </article>
+    <article class="show reveal" id="harris-walz">
+      <div class="show-details">
+        <p class="label">Project 03</p>
+        <dl>
+          <dt class="hand">about</dt><dd>Sentiment analysis</dd>
+          <dt class="hand">made</dt><dd>2024</dd>
+          <dt class="hand">with</dt><dd>Python</dd>
+        </dl>
+        <h3>Harris &amp; Walz on Reddit</h3>
+        <a class="open" href="https://github.com/kenedyducheine/Harris_and_Walz">Open&nbsp;↗</a>
+      </div>
+      <a class="show-cover" href="https://github.com/kenedyducheine/Harris_and_Walz" aria-label="Harris &amp; Walz on Reddit">
+        <img src="assets/art/435868.webp" alt="The Card Players, Paul Cézanne, 1890–92" loading="lazy">
+      </a>
+      <div class="show-text">
+        <p class="label">Sentiment analysis</p>
+        <p>89 days of hot and rising posts from five political subreddits, read for what people said about the 2024 Democratic ticket: word clouds, sentiment over time and topic modeling, set against the convention and the debates.</p>
+        <span class="rule"></span>
+        <p class="credit">The Card Players, Paul Cézanne, 1890–92</p>
+      </div>
+    </article>
+    <article class="show reveal" id="palette">
+      <div class="show-details">
+        <p class="label">Project 04</p>
+        <dl>
+          <dt class="hand">about</dt><dd>An R package</dd>
+          <dt class="hand">made</dt><dd>2024</dd>
+          <dt class="hand">with</dt><dd>R</dd>
+        </dl>
+        <h3>colorblindpalette</h3>
+        <a class="open" href="https://github.com/kenedyducheine/colorblindpalette">Open&nbsp;↗</a>
+      </div>
+      <a class="show-cover" href="https://github.com/kenedyducheine/colorblindpalette" aria-label="colorblindpalette">
+        <img src="assets/art/436535.webp" alt="Wheat Field with Cypresses, Vincent van Gogh, 1889" loading="lazy">
+      </a>
+      <div class="show-text">
+        <p class="label">An R package</p>
+        <p>Color palettes that stay readable for people with red-green colorblindness, because a chart should work for everyone who looks at it.</p>
+        <span class="rule"></span>
+        <p class="credit">Wheat Field with Cypresses, Vincent van Gogh, 1889</p>
+      </div>
+    </article>
+    <article class="show reveal" id="streams">
+      <div class="show-details">
+        <p class="label">Project 05</p>
+        <dl>
+          <dt class="hand">about</dt><dd>Data mining</dd>
+          <dt class="hand">made</dt><dd>2024</dd>
+          <dt class="hand">with</dt><dd>R</dd>
+        </dl>
+        <h3>Pop Song Streams</h3>
+        <a class="open" href="https://github.com/kenedyducheine/final_proj-datamining-">Open&nbsp;↗</a>
+      </div>
+      <a class="show-cover" href="https://github.com/kenedyducheine/final_proj-datamining-" aria-label="Pop Song Streams">
+        <img src="assets/art/435844.webp" alt="The Musicians, Caravaggio, 1597" loading="lazy">
+      </a>
+      <div class="show-text">
+        <p class="label">Data mining</p>
+        <p>Mining a dataset of pop songs and their streams: cleaning it up, an SVM model, word clouds and a Shiny app.</p>
+        <span class="rule"></span>
+        <p class="credit">The Musicians, Caravaggio, 1597</p>
+      </div>
+    </article>
+    <article class="show reveal" id="gridpaper">
+      <div class="show-details">
+        <p class="label">Project 06</p>
+        <dl>
+          <dt class="hand">about</dt><dd>In the works</dd>
+          <dt class="hand">made</dt><dd>2026</dd>
+          <dt class="hand">with</dt><dd>Swift</dd>
+        </dl>
+        <h3>gridpaper</h3>
+        <span class="open soon">Coming soon</span>
+      </div>
+      <div class="show-cover" aria-label="gridpaper">
+        <img src="assets/art/459080.webp" alt="Erasmus of Rotterdam, Hans Holbein the Younger, ca. 1532" loading="lazy">
+      </div>
+      <div class="show-text">
+        <p class="label">In the works</p>
+        <p>A better note-taking app for the iPad. Coming soon.</p>
+        <span class="rule"></span>
+        <p class="credit">Erasmus of Rotterdam, Hans Holbein the Younger, ca. 1532</p>
+      </div>
+    </article>
+    </section>
+  </main>
+
+  <footer>
+    <p class="thanks hand">Thanks for stopping by ♡</p>
+    <p class="label">Art: The Metropolitan Museum of Art, Open Access</p>
+  </footer>
+
+  <script>
+    // today's date by the A, like azine's board
+    document.getElementById('date').textContent = new Date()
+      .toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+    // slide each showcase in as it scrolls into view
+    const seen = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) { entry.target.classList.add('seen'); seen.unobserve(entry.target); }
+      }
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => seen.observe(el));
+  </script>
+</body>
+</html>
