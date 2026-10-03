@@ -1,7 +1,6 @@
 # kenedyducheine.github.io
 
-My personal site, in the style of [azine](https://azine.io): the same Met art,
-colors and handwriting font. It's one plain HTML file, so there's nothing to build.
+My personal site, in the style of [azine](https://azine.io).
 
 - **Edit the words or projects:** `index.html`. Each project is one
   `<article class="show">` block in the Projects section; copy one to add another.
