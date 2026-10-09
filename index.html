@@ -176,9 +176,24 @@
     .show-text .rule { display: block; width: 18px; height: 1px; background: var(--ink); margin: 18px auto 12px; }
     .show-text .credit { color: var(--muted); font-size: 0.85rem; }
 
-    /* ----- the one-page summary of how azine works (a PDF, drawn with PDF.js) ----- */
-    .doc { padding: 40px 0 24px; }
-    .doc-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 28px; margin-bottom: 22px; }
+    /* ----- the one-page summary of how azine works (a PDF, drawn with PDF.js) -----
+       Hidden until someone clicks "How it works" on azine; then it opens over the page. */
+    .doc {
+      width: min(940px, calc(100vw - 32px)); max-height: calc(100vh - 32px); max-height: calc(100svh - 32px);
+      padding: 26px 34px 40px; border: 0;
+      background: var(--bg); color: var(--ink);
+      box-shadow: 0 22px 60px rgba(10, 12, 11, 0.45);
+      overflow: auto; overscroll-behavior: contain;
+    }
+    .doc::backdrop { background: rgba(10, 12, 11, 0.72); }
+    html:has(.doc[open]) { overflow: hidden; }
+    .doc-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 28px; margin-bottom: 22px; padding-right: 36px; }
+    .doc-close {
+      position: absolute; top: 14px; right: 16px;
+      width: 36px; height: 36px; padding: 0;
+      border: 0; background: none; color: var(--ink);
+      font: 400 1.7rem/1 var(--font-main); cursor: pointer;
+    }
     .doc-head .screen-label { font-size: 1.3rem; margin: 0; }
     .doc-page {
       display: block;
@@ -217,6 +232,7 @@
       .show-text .rule { margin-left: 0; }
       footer { padding: 40px 16px 32px; }
       .note { padding: 28px 24px 24px; }
+      .doc { padding: 22px 16px 28px; }
       .note h1 { font-size: 1.9rem; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -583,7 +599,7 @@
         <h1 class="hand">Hi, I'm Kenedy</h1>
         <p>I'm a master's student at Georgetown. I created <a href="https://azine.io">azine</a>, a weekly
           recommendation board for essays, movies, albums and novels. It's for people who are
-          mad at ads/influencers/AI slop. I also created Grid Notes, a true to size grid paper note app. I addresses every issue I have with other note apps. Namely, creating mini notes within notes and no obnoxious scrolling.  </p>
+          mad at ads/influencers/AI slop. I also created Grid Notes, a true to size grid paper note app. I address every issue I have with other note apps. Namely, creating mini notes within notes and no obnoxious scrolling.  </p>
         <div class="links">
           <a href="https://azine.io">See azine&nbsp;↗</a>
           <a href="#projects">Projects&nbsp;↓</a>
@@ -604,7 +620,7 @@
           </dl>
           <h3>azine</h3>
           <a class="open" href="https://azine.io">Open&nbsp;↗</a>
-          &nbsp;&nbsp;<a class="open" href="#how-azine-works">How it works&nbsp;↓</a>
+          &nbsp;&nbsp;<a class="open" href="assets/azine-summary.pdf" id="how-it-works">How it works</a>
         </div>
         <a class="show-cover" href="https://azine.io" aria-label="azine">
           <img src="assets/azine-landing.jpg" alt="azine's landing page: a wall of paintings from the Met" loading="lazy">
@@ -641,8 +657,10 @@
         </div>
       </article>
 
-      <!-- How azine works: the one-page system summary (from the azine repo, docs/azine-summary.pdf) -->
-      <div class="doc reveal" id="how-azine-works">
+      <!-- How azine works: the one-page system summary (from the azine repo, docs/azine-summary.pdf).
+           Only shows when someone clicks "How it works" on azine. -->
+      <dialog class="doc" id="how-azine-works" aria-label="How azine works">
+        <button class="doc-close" type="button" aria-label="Close">&times;</button>
         <div class="doc-head">
           <h3 class="screen-label hand">How azine works</h3>
           <a class="open" href="assets/azine-summary.pdf">Open the PDF&nbsp;↗</a>
@@ -653,7 +671,7 @@
           <img src="assets/azine-summary.jpg" alt="azine system summary: how the site, the server, the recommender and the outside services fit together, on one page" loading="lazy">
           <canvas aria-hidden="true"></canvas>
         </a>
-      </div>
+      </dialog>
     </section>
 
     <section id="projects">
@@ -783,7 +801,7 @@
       }
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => seen.observe(el));
-    // draw the azine summary PDF onto the page with PDF.js, once it's close to view
+    // "How it works" opens the azine summary over the page; PDF.js draws the PDF the first time
     const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
     const docPage = document.getElementById('doc-page');
     let pdfPage = null;
@@ -809,14 +827,26 @@
       };
       document.head.appendChild(script);
     }
-    const near = new IntersectionObserver(entries => {
-      if (entries.some(e => e.isIntersecting)) { near.disconnect(); loadDoc(); }
-    }, { rootMargin: '600px' });
-    near.observe(docPage);
+    const howItWorks = document.getElementById('how-azine-works');
+    let docLoading = false;
+    document.getElementById('how-it-works').addEventListener('click', event => {
+      event.preventDefault();
+      howItWorks.showModal();
+      howItWorks.scrollTop = 0;
+      if (!docLoading) { docLoading = true; loadDoc(); }
+      else if (pdfPage) drawDoc();  // the window may have changed size while it was closed
+    });
+    howItWorks.querySelector('.doc-close').addEventListener('click', () => howItWorks.close());
+    // a click on the dark backdrop around it closes it too (Esc already does)
+    howItWorks.addEventListener('click', event => {
+      const box = howItWorks.getBoundingClientRect();
+      const outside = event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom;
+      if (event.target === howItWorks && outside) howItWorks.close();
+    });
     let resizeTimer;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => { if (pdfPage) drawDoc(); }, 250);
+      resizeTimer = setTimeout(() => { if (pdfPage && howItWorks.open) drawDoc(); }, 250);
     });
   </script>
 </body>
