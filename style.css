@@ -42,7 +42,7 @@
   --font-dek:      "IBM Plex Sans", system-ui, sans-serif;       /* the short line under a big headline */
 
   /* ----- SIZES & WEIGHTS ----- */
-  --masthead-size:  clamp(2.6rem, 7vw, 6.2rem);  /* "KENEDY DUCHEINE" at the top */
+  --masthead-size:  clamp(1.6rem, 5vw, 4.2rem);  /* "KENEDY DUCHEINE" at the top */
   --masthead-weight: 800;                        /* 100 (thin) .. 900 (black) */
   --headline-weight: 700;
   --label-spacing:  0.16em;                      /* space between letters in kickers/bylines */
