@@ -116,20 +116,33 @@ a { color: inherit; text-decoration: none; }
 .nav a { font-size: 0.85rem; font-weight: 600; padding-bottom: 3px; border-bottom: 3px solid transparent; }
 .nav a:hover, .nav a[aria-current] { border-color: var(--nav-hover); }
 
-/* ================= 4. THE SPREAD: three columns ================= */
+/* ================= 4. THE SPREAD =================
+   Four columns: Grid Notes and the letter in the first, azine across the
+   middle two, the smaller projects in the last. Projects that don't fit on
+   the right fill in the space under azine and the letter, so the page stays
+   short. (A small script at the bottom of index.html packs them tightly.) */
 .spread {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
-  grid-template-areas: "left center right";
-  gap: var(--gutter);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-flow: row dense;           /* fill gaps as soon as there's room */
+  column-gap: var(--gutter);
+  row-gap: 34px;
   padding: 34px 0 60px;
   align-items: start;
 }
-.col-left   { grid-area: left; }     /* Grid Notes and the letter */
-.col-center { grid-area: center; position: sticky; top: 24px; }   /* azine stays in view while the projects scroll */
-.col-right  { grid-area: right; }    /* the smaller projects */
+.col-left, .col-right { display: contents; }   /* their cards sit straight on the spread */
+#grid-notes   { grid-column: 1; grid-row: 1; }       /* Grid Notes: first column, top */
+.col-left .letter { grid-column: 1; grid-row: 2; }   /* the letter: under Grid Notes */
+.col-center   { grid-column: 2 / 4; grid-row: 1 / 3; } /* azine: the middle two columns */
+.col-title    { grid-column: 4; grid-row: 1; }       /* "MORE PROJECTS": last column, top */
+.col-right .card { grid-column: span 1; }            /* each project: one column, wherever there's room */
+.spread .card { margin-bottom: 0; }
+/* once the script has measured everything, rows are 2px slices and each
+   item spans as many as it's tall, so nothing leaves a gap */
+.spread.packed { grid-auto-rows: 2px; row-gap: 0; }
+.spread.packed > *, .spread.packed > .col-left > *, .spread.packed > .col-right > * { margin-bottom: 0; }
 .col-title {                          /* "MORE PROJECTS" over the right column */
-  margin: 0 0 22px; padding-bottom: 10px;
+  margin: 0; padding-bottom: 10px;
   border-bottom: 3px solid var(--rule);
   font: 600 0.85rem var(--font-label); letter-spacing: var(--label-spacing); text-transform: uppercase;
   color: var(--ink);
@@ -236,11 +249,10 @@ a { color: inherit; text-decoration: none; }
 /* ================= 7. PHONES & SMALL SCREENS ================= */
 @media (max-width: 1000px) {
   :root { --gutter: 22px; }
-  .spread {
-    grid-template-columns: 1fr;
-    grid-template-areas: "center" "left" "right";   /* azine first, then Grid Notes and the letter, then the projects */
-  }
-  .col-center { position: static; }
+  /* one column: azine first, then Grid Notes and the letter, then the projects */
+  .spread { grid-template-columns: 1fr; }
+  .spread > *, .col-left > *, .col-right > * { grid-column: 1 !important; grid-row: auto !important; }
+  .col-center { order: -1; }
   .feature-head, .section, .docs { grid-template-columns: 1fr; }
   .feature-head .cover { max-width: 420px; }
 }

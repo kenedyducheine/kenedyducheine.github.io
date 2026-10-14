@@ -108,8 +108,8 @@
       <!-- ===== RIGHT: the smaller projects =====
            Each project is one <article class="card"> block: copy one to add a project.
            Inside a card:  kicker = small red word, h3 = title, p = summary, byline = year · tools. -->
-      <section class="col-right" id="projects">
-        <h2 class="col-title">More projects</h2>   <!-- the heading over this column -->
+      <section class="col-right">
+        <h2 class="col-title" id="projects">More projects</h2>   <!-- the heading over this column -->
 
         <!-- the other projects: the pictures are public domain works from the Met (assets/art/) -->
         <article class="card">
@@ -180,5 +180,31 @@
     </div>
   </footer>
 
+  <!-- Packs the spread: measures each card and sets how many 2px rows it spans,
+       so the projects fill the space under azine. Without it the page still works,
+       just with a few more gaps. -->
+  <script>
+    const spread = document.querySelector('.spread');
+    const items = [...spread.querySelectorAll('.spread > section.col-center, .col-left > *, .col-right > *')];
+    const ROW = 2, GAP = 34;   /* GAP: the space under each item, in px */
+    function pack() {
+      const oneColumn = getComputedStyle(spread).gridTemplateColumns.split(' ').length < 2;
+      spread.classList.toggle('packed', !oneColumn);
+      for (const el of items) {
+        if (oneColumn) { el.style.gridRowEnd = ''; el.style.gridRowStart = ''; continue; }
+        const span = Math.ceil((el.getBoundingClientRect().height + GAP) / ROW);
+        el.style.gridRowEnd = 'span ' + span;
+      }
+      if (oneColumn) return;
+      // the letter starts where Grid Notes ends
+      const gridNotes = document.getElementById('grid-notes');
+      const letter = document.querySelector('.col-left .letter');
+      letter.style.gridRowStart = 1 + parseInt(gridNotes.style.gridRowEnd.slice(5));
+    }
+    const watch = new ResizeObserver(() => requestAnimationFrame(pack));
+    items.forEach(el => watch.observe(el));
+    window.addEventListener('resize', pack);
+    pack();
+  </script>
 </body>
 </html>
