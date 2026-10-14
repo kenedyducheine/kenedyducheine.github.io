@@ -71,9 +71,23 @@
         </div>
       </section>
 
-      <!-- ===== RIGHT: the letter ("Hi, I'm Kenedy") and links ===== -->
-      <aside class="col-right" id="about">
-        <div class="letter">
+      <!-- ===== LEFT: Grid Notes, then the letter ("Hi, I'm Kenedy") ===== -->
+      <section class="col-left">
+
+        <!-- Grid Notes (the "lead" card is a little bigger) -->
+        <article class="card lead" id="grid-notes">
+          <div class="card-pic">
+            <img src="assets/grid-notes.webp" alt="The Grid Notes app icon: GRID NOTES in cream letters on a navy arch over grid paper">
+          </div>
+          <p class="kicker">Better note taking app for iPad</p>
+          <h3>Grid Notes</h3>
+          <p>Grid paper with real 7&nbsp;mm squares on iPadOS. Circle something to turn it into a sticker,
+            scribble to erase, no bobbly scrolling, and very beautiful.</p>
+          <p class="byline">2026 · Swift · Coming to the App Store</p>
+        </article>
+
+        <!-- the letter: edit the words in each <p>; the list at the bottom is links -->
+        <div class="letter" id="about">
           <p class="kicker">Editor's letter</p>
           <h2>Hi, I'm Kenedy</h2>
           <p>I'm a master's student at Georgetown. I created <a href="https://azine.io">azine</a>, a weekly
@@ -89,27 +103,16 @@
             <li><a href="https://github.com/kenedyducheine">GitHub <span>↗</span></a></li>
           </ul>
         </div>
-      </aside>
+      </section>
 
-      <!-- ===== LEFT: Grid Notes first, then the other projects =====
+      <!-- ===== RIGHT: the smaller projects =====
            Each project is one <article class="card"> block: copy one to add a project.
            Inside a card:  kicker = small red word, h3 = title, p = summary, byline = year · tools. -->
-      <section class="col-left">
-
-        <!-- Grid Notes (the "lead" card is a little bigger) -->
-        <article class="card lead" id="grid-notes">
-          <div class="card-pic">
-            <img src="assets/grid-notes.webp" alt="The Grid Notes app icon: GRID NOTES in cream letters on a navy arch over grid paper">
-          </div>
-          <p class="kicker">Better note taking app for iPad</p>
-          <h3>Grid Notes</h3>
-          <p>Grid paper with real 7&nbsp;mm squares on iPadOS. Circle something to turn it into a sticker,
-            scribble to erase, no bobbly scrolling, and very beautiful.</p>
-          <p class="byline">2026 · Swift · Coming to the App Store</p>
-        </article>
+      <section class="col-right" id="projects">
+        <h2 class="col-title">More projects</h2>   <!-- the heading over this column -->
 
         <!-- the other projects: the pictures are public domain works from the Met (assets/art/) -->
-        <article class="card" id="projects">
+        <article class="card">
           <a class="card-pic" href="https://github.com/kenedyducheine/statistical-crime-analysis">
             <img src="assets/art/55433.webp" alt="Sudden Shower over Shin-Ōhashi Bridge and Atake, Utagawa Hiroshige, 1857" loading="lazy">
           </a>
@@ -165,6 +168,7 @@
         </article>
 
       </section>
+
     </main>
   </div>
 

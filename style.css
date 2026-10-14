@@ -125,9 +125,16 @@ a { color: inherit; text-decoration: none; }
   padding: 34px 0 60px;
   align-items: start;
 }
-.col-left   { grid-area: left; }
+.col-left   { grid-area: left; }     /* Grid Notes and the letter */
 .col-center { grid-area: center; position: sticky; top: 24px; }   /* azine stays in view while the projects scroll */
-.col-right  { grid-area: right;  position: sticky; top: 24px; }
+.col-right  { grid-area: right; }    /* the smaller projects */
+.col-title {                          /* "MORE PROJECTS" over the right column */
+  margin: 0 0 22px; padding-bottom: 10px;
+  border-bottom: 3px solid var(--rule);
+  font: 600 0.85rem var(--font-label); letter-spacing: var(--label-spacing); text-transform: uppercase;
+  color: var(--ink);
+}
+.col-left .letter { margin-top: 0; }
 
 /* ----- a story card in the left column: picture, kicker, headline, summary, byline ----- */
 .card { text-align: center; padding-bottom: 34px; margin-bottom: 34px; border-bottom: 1px solid color-mix(in srgb, var(--rule) 25%, transparent); }
@@ -231,9 +238,9 @@ a { color: inherit; text-decoration: none; }
   :root { --gutter: 22px; }
   .spread {
     grid-template-columns: 1fr;
-    grid-template-areas: "center" "right" "left";   /* azine first, then the letter, then the projects */
+    grid-template-areas: "center" "left" "right";   /* azine first, then Grid Notes and the letter, then the projects */
   }
-  .col-center, .col-right { position: static; }
+  .col-center { position: static; }
   .feature-head, .section, .docs { grid-template-columns: 1fr; }
   .feature-head .cover { max-width: 420px; }
 }
