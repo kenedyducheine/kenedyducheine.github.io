@@ -34,7 +34,7 @@
   --footer-bg:    var(--olive);
   --footer-text:  var(--white);
   --link-mark:    var(--gold);    /* the highlight under links in body text */
-  --heart-color:  var(--red);     /* the handwritten heart after "Thanks for stopping by" */
+  --heart-color:  var(--gold);    /* the handwritten heart after "Thanks for stopping by" */
 
   /* ----- FONTS (all loaded from Google Fonts in each page's <head>) ----- */
   --font-headline: "Poppins", system-ui, sans-serif;             /* the name, headlines */
