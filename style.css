@@ -44,7 +44,7 @@
   /* ----- SIZES & WEIGHTS ----- */
   --masthead-size:  clamp(1.6rem, 5vw, 4.2rem);  /* "KENEDY DUCHEINE" at the top */
   --masthead-weight: 800;                        /* 100 (thin) .. 900 (black) */
-  --headline-weight: 700;
+  --headline-weight: 400;
   --label-spacing:  0.16em;                      /* space between letters in kickers/bylines */
   --page-width:     1360px;                      /* widest the spread gets */
   --gutter:         40px;                        /* space between the columns */
@@ -79,7 +79,7 @@ a { color: inherit; text-decoration: none; }
 /* ================= 1. THE STRIP: the thin band at the very top ================= */
 .strip {
   background: var(--strip-bg); color: var(--strip-text);
-  font-size: 0.72rem; font-weight: 500;
+  font-size: 0.72rem; font-weight: 400;
   text-align: center; padding: 9px 16px;
   display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 34px;
 }
