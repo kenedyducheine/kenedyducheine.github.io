@@ -1,0 +1,5 @@
+# Search engines may read everything. The sitemap lists the pages.
+User-agent: *
+Allow: /
+
+Sitemap: https://kenedyducheine.github.io/sitemap.xml
