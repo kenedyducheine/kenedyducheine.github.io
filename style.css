@@ -10,7 +10,7 @@
 
 :root {
   /* ----- THE PALETTE: the five colors of the site ----- */
-  --white: #FFFFFF;
+  --white: #FFF8F0;
   --gold:  #ECA72C;
   --red:   #B3001B;
   --olive: #313715;
@@ -22,7 +22,7 @@
   --kicker:       var(--red);     /* the small word above each headline (e.g. "IPAD APP") */
   --byline:       var(--olive);   /* the small line under each headline (e.g. "2026 · PYTHON, R") */
   --rule:         var(--navy);    /* the lines between sections */
-  --strip-bg:     var(--red);     /* the thin band at the very top */
+  --strip-bg:     var(--olive);     /* the thin band at the very top */
   --strip-text:   var(--white);
   --button-bg:    var(--navy);    /* the "GITHUB" box at the left of the masthead */
   --button-text:  var(--white);
