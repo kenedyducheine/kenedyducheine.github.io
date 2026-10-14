@@ -1,7 +1,7 @@
 /* =====================================================================
    kenedyducheine.github.io -- the look of every page (index.html, azine.html)
 
-   Laid out like a magazine spread: a masthead, a nav band, then three
+   Laid out like a magazine spread: a masthead, then three
    columns (projects on the left, azine in the middle, a letter on the right).
 
    To restyle: change the settings in :root right below. Everything else in
@@ -26,7 +26,6 @@
   --strip-text:   var(--white);
   --button-bg:    var(--navy);    /* the "GITHUB" box at the left of the masthead */
   --button-text:  var(--white);
-  --nav-hover:    var(--gold);    /* underline under a nav link when hovered */
   --a-color:      var(--red);     /* azine's big A */
   --a-bg:         var(--white);   /* the panel behind the A */
   --letter-bg:    var(--gold);    /* the "Hi, I'm Kenedy" panel on the right */
@@ -39,7 +38,7 @@
   /* ----- FONTS (all loaded from Google Fonts in each page's <head>) ----- */
   --font-headline: "Poppins", system-ui, sans-serif;             /* the name, headlines */
   --font-body:     "Google Sans", "IBM Plex Sans", system-ui, sans-serif; /* paragraphs */
-  --font-label:    "IBM Plex Mono", ui-monospace, monospace;     /* kickers, bylines, nav */
+  --font-label:    "IBM Plex Mono", ui-monospace, monospace;     /* kickers, bylines, small links */
   --font-dek:      "IBM Plex Sans", system-ui, sans-serif;       /* the short line under a big headline */
 
   /* ----- SIZES & WEIGHTS ----- */
@@ -66,8 +65,8 @@ a { color: inherit; text-decoration: none; }
 .prose a, .card > p:not(.byline) a, .dek a { box-shadow: inset 0 -0.35em 0 var(--link-mark); }  /* highlighter-style links in paragraphs */
 .wrap { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--gutter); }
 
-/* small capitals labels: kickers, bylines, nav */
-.kicker, .byline, .nav a, .strip, .button, .more {
+/* small capitals labels: kickers, bylines, the strip, buttons */
+.kicker, .byline, .strip, .button, .more {
   font-family: var(--font-label);
   text-transform: uppercase;
   letter-spacing: var(--label-spacing);
@@ -107,15 +106,8 @@ a { color: inherit; text-decoration: none; }
 }
 .masthead-right { justify-self: end; }
 
-/* ================= 3. THE NAV BAND under the masthead ================= */
-.nav {
-  border-top: 3px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 38px;
-  padding: 13px 0;
-}
-.nav a { font-size: 0.85rem; font-weight: 600; padding-bottom: 3px; border-bottom: 3px solid transparent; }
-.nav a:hover, .nav a[aria-current] { border-color: var(--nav-hover); }
+/* ================= 3. THE LINE under the masthead ================= */
+.masthead { border-bottom: 3px solid var(--rule); }
 
 /* ================= 4. THE SPREAD =================
    Four columns: Grid Notes and the letter in the first, azine across the
@@ -269,8 +261,6 @@ a { color: inherit; text-decoration: none; }
   .masthead { grid-template-columns: 1fr; justify-items: center; }
   .button, .masthead-right { justify-self: center; }
   .masthead-right { display: none; }
-  .nav { gap: 4px 20px; }
-  .nav a { font-size: 0.75rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
