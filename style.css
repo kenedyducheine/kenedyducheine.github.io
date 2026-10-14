@@ -1,0 +1,250 @@
+/* =====================================================================
+   kenedyducheine.github.io -- the look of every page (index.html, azine.html)
+
+   Laid out like a magazine spread: a masthead, a nav band, then three
+   columns (projects on the left, azine in the middle, a letter on the right).
+
+   To restyle: change the settings in :root right below. Everything else in
+   this file reads from them. A color is a hex code like #B3001B.
+   ===================================================================== */
+
+:root {
+  /* ----- THE PALETTE: the five colors of the site ----- */
+  --white: #FFFFFF;
+  --gold:  #ECA72C;
+  --red:   #B3001B;
+  --olive: #313715;
+  --navy:  #102542;
+
+  /* ----- WHERE EACH COLOR GOES (swap the var(...) to recolor a part) ----- */
+  --page-bg:      var(--white);   /* the page behind everything */
+  --ink:          var(--navy);    /* headlines and body text */
+  --kicker:       var(--red);     /* the small word above each headline (e.g. "IPAD APP") */
+  --byline:       var(--olive);   /* the small line under each headline (e.g. "2026 · PYTHON, R") */
+  --rule:         var(--navy);    /* the lines between sections */
+  --strip-bg:     var(--red);     /* the thin band at the very top */
+  --strip-text:   var(--white);
+  --button-bg:    var(--navy);    /* the "GITHUB" box at the left of the masthead */
+  --button-text:  var(--white);
+  --nav-hover:    var(--gold);    /* underline under a nav link when hovered */
+  --a-color:      var(--red);     /* azine's big A */
+  --a-bg:         var(--white);   /* the panel behind the A */
+  --letter-bg:    var(--gold);    /* the "Hi, I'm Kenedy" panel on the right */
+  --letter-text:  var(--navy);
+  --footer-bg:    var(--olive);
+  --footer-text:  var(--white);
+  --link-mark:    var(--gold);    /* the highlight under links in body text */
+
+  /* ----- FONTS (all loaded from Google Fonts in each page's <head>) ----- */
+  --font-headline: "Poppins", system-ui, sans-serif;             /* the name, headlines */
+  --font-body:     "Google Sans", "IBM Plex Sans", system-ui, sans-serif; /* paragraphs */
+  --font-label:    "IBM Plex Mono", ui-monospace, monospace;     /* kickers, bylines, nav */
+  --font-dek:      "IBM Plex Sans", system-ui, sans-serif;       /* the short line under a big headline */
+
+  /* ----- SIZES & WEIGHTS ----- */
+  --masthead-size:  clamp(2.6rem, 7vw, 6.2rem);  /* "KENEDY DUCHEINE" at the top */
+  --masthead-weight: 800;                        /* 100 (thin) .. 900 (black) */
+  --headline-weight: 700;
+  --label-spacing:  0.16em;                      /* space between letters in kickers/bylines */
+  --page-width:     1360px;                      /* widest the spread gets */
+  --gutter:         40px;                        /* space between the columns */
+}
+
+/* ---------- basics (rarely need changing) ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+  font: 400 16px/1.55 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+.prose a, .card > p:not(.byline) a, .dek a { box-shadow: inset 0 -0.35em 0 var(--link-mark); }  /* highlighter-style links in paragraphs */
+.wrap { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* small capitals labels: kickers, bylines, nav */
+.kicker, .byline, .nav a, .strip, .button, .more {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: var(--label-spacing);
+}
+.kicker { color: var(--kicker); font-weight: 600; font-size: 0.78rem; margin: 0 0 8px; }
+.byline { color: var(--byline); font-weight: 500; font-size: 0.72rem; margin: 12px 0 0; }
+.more { font-weight: 600; font-size: 0.75rem; color: var(--ink); border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+.more:hover { border-color: var(--red); }
+
+/* ================= 1. THE STRIP: the thin band at the very top ================= */
+.strip {
+  background: var(--strip-bg); color: var(--strip-text);
+  font-size: 0.72rem; font-weight: 500;
+  text-align: center; padding: 9px 16px;
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 34px;
+}
+
+/* ================= 2. THE MASTHEAD: button, name, link ================= */
+.masthead {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
+  padding: 22px 0 18px;
+}
+.button {
+  justify-self: start;
+  background: var(--button-bg); color: var(--button-text);
+  font-size: 0.8rem; font-weight: 600;
+  padding: 10px 16px;
+}
+.button:hover { background: var(--red); }
+.name {
+  margin: 0;
+  font: var(--masthead-weight) var(--masthead-size)/0.95 var(--font-headline);
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink);
+}
+.masthead-right { justify-self: end; }
+
+/* ================= 3. THE NAV BAND under the masthead ================= */
+.nav {
+  border-top: 3px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 38px;
+  padding: 13px 0;
+}
+.nav a { font-size: 0.85rem; font-weight: 600; padding-bottom: 3px; border-bottom: 3px solid transparent; }
+.nav a:hover, .nav a[aria-current] { border-color: var(--nav-hover); }
+
+/* ================= 4. THE SPREAD: three columns ================= */
+.spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-areas: "left center right";
+  gap: var(--gutter);
+  padding: 34px 0 60px;
+  align-items: start;
+}
+.col-left   { grid-area: left; }
+.col-center { grid-area: center; position: sticky; top: 24px; }   /* azine stays in view while the projects scroll */
+.col-right  { grid-area: right;  position: sticky; top: 24px; }
+
+/* ----- a story card in the left column: picture, kicker, headline, summary, byline ----- */
+.card { text-align: center; padding-bottom: 34px; margin-bottom: 34px; border-bottom: 1px solid color-mix(in srgb, var(--rule) 25%, transparent); }
+.card:last-child { border-bottom: 0; }
+.card-pic { display: block; aspect-ratio: 1; overflow: hidden; margin-bottom: 18px; }
+.card-pic img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.card:hover .card-pic img { transform: scale(1.03); }
+.card h3 {
+  margin: 0;
+  font: var(--headline-weight) 1.7rem/1.12 var(--font-headline);
+  letter-spacing: -0.02em;
+}
+.card p { margin: 10px 0 0; font-size: 0.98rem; }
+.card.lead h3 { font-size: 2.3rem; }   /* the first card (Grid Notes) is bigger */
+
+/* ----- the centerpiece: azine's A on white ----- */
+.cover {
+  display: grid; place-items: center;
+  aspect-ratio: 4 / 4.6;
+  background: var(--a-bg);
+  outline: 1px solid color-mix(in srgb, var(--rule) 18%, transparent);
+  color: var(--a-color);
+  transition: background 0.3s ease;
+}
+.cover svg { width: 46%; height: auto; transition: transform 0.5s ease; }
+.cover:hover svg { transform: scale(1.04); }
+.cover-caption { text-align: center; padding-top: 22px; }
+.cover-caption h2 {
+  margin: 0;
+  font: 800 clamp(2rem, 3.4vw, 3.1rem)/1.02 var(--font-headline);
+  letter-spacing: -0.03em;
+}
+.cover-caption .dek { font: 400 1.1rem/1.45 var(--font-dek); max-width: 36em; margin: 12px auto 16px; }
+
+/* ----- the letter on the right ----- */
+.letter { background: var(--letter-bg); color: var(--letter-text); padding: 28px 26px 30px; }
+.letter .kicker { color: var(--letter-text); }
+.letter h2 { margin: 0 0 12px; font: 800 2rem/1.05 var(--font-headline); letter-spacing: -0.02em; }
+.letter p { margin: 0 0 12px; }
+.letter p a { box-shadow: inset 0 -0.35em 0 color-mix(in srgb, var(--white) 55%, transparent); }  /* links inside the letter */
+.elsewhere { list-style: none; margin: 26px 0 0; padding: 0; }
+.elsewhere li { border-top: 1px solid color-mix(in srgb, var(--rule) 25%, transparent); }
+.elsewhere a {
+  display: flex; justify-content: space-between; padding: 12px 0;
+  font: 600 1.05rem var(--font-headline);
+}
+.elsewhere a:hover { color: var(--red); }
+
+/* ================= 5. THE FOOTER ================= */
+.footer { background: var(--footer-bg); color: var(--footer-text); padding: 34px 0; }
+.footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 30px; align-items: baseline; }
+.footer .sign { font: 800 1.6rem var(--font-headline); letter-spacing: -0.02em; margin: 0; }
+.footer .byline { color: var(--footer-text); opacity: 0.8; margin: 0; }
+
+/* ================= 6. THE AZINE PAGE (azine.html) ================= */
+.feature-head {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--gutter);
+  align-items: center; padding: 40px 0 46px; border-bottom: 1px solid var(--rule);
+}
+.feature-head .cover { aspect-ratio: 1; }
+.feature-head h1 {
+  margin: 0;
+  font: 800 clamp(3rem, 7vw, 6rem)/0.92 var(--font-headline);
+  letter-spacing: -0.04em;
+}
+.feature-head .dek { font: 400 1.3rem/1.4 var(--font-dek); margin: 16px 0 22px; }
+.feature-head .links { display: flex; flex-wrap: wrap; gap: 12px 26px; }
+
+.section { padding: 46px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.6fr); gap: var(--gutter); }
+.section:last-of-type { border-bottom: 0; }
+.section-title { margin: 0; font: 800 2.2rem/1 var(--font-headline); letter-spacing: -0.03em; }
+.section-title .kicker { display: block; margin-bottom: 10px; }
+.prose { font-size: 1.08rem; max-width: 46em; }
+.prose p:first-child { margin-top: 0; }
+.prose p:first-child::first-letter {   /* the big first letter, magazine style */
+  float: left; font: 800 3.6em/0.8 var(--font-headline); color: var(--red); margin: 6px 10px 0 0;
+}
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 24px 0 0; }
+.steps li { counter-increment: step; position: relative; padding: 0 0 14px 52px; }
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute; left: 0; top: -2px;
+  font: 800 1.3rem var(--font-headline); color: var(--gold);
+}
+.steps strong { font-family: var(--font-headline); font-weight: 700; }
+
+.stack { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.stack th, .stack td { text-align: left; vertical-align: top; padding: 12px 18px 12px 0; border-top: 1px solid color-mix(in srgb, var(--rule) 25%, transparent); }
+.stack tr:first-child th, .stack tr:first-child td { border-top: 3px solid var(--rule); }
+.stack th { font: 700 1rem var(--font-headline); white-space: nowrap; width: 9em; }
+
+.docs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
+.doc-card .doc-pic { display: block; background: var(--white); box-shadow: 0 18px 40px color-mix(in srgb, var(--navy) 22%, transparent); transition: transform 0.4s ease; }
+.doc-card .doc-pic:hover { transform: translateY(-4px) rotate(-0.5deg); }
+.doc-card h3 { margin: 22px 0 6px; font: 700 1.5rem/1.1 var(--font-headline); letter-spacing: -0.02em; }
+.doc-card p { margin: 0 0 14px; }
+.doc-card .links { display: flex; gap: 22px; }
+
+/* ================= 7. PHONES & SMALL SCREENS ================= */
+@media (max-width: 1000px) {
+  :root { --gutter: 22px; }
+  .spread {
+    grid-template-columns: 1fr;
+    grid-template-areas: "center" "right" "left";   /* azine first, then the letter, then the projects */
+  }
+  .col-center, .col-right { position: static; }
+  .feature-head, .section, .docs { grid-template-columns: 1fr; }
+  .feature-head .cover { max-width: 420px; }
+}
+@media (max-width: 640px) {
+  :root { --gutter: 16px; }
+  .masthead { grid-template-columns: 1fr; justify-items: center; }
+  .button, .masthead-right { justify-self: center; }
+  .masthead-right { display: none; }
+  .nav { gap: 4px 20px; }
+  .nav a { font-size: 0.75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}

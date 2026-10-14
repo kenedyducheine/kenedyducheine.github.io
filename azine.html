@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The tab title and what search engines / link previews show -->
+  <title>azine · Kenedy Ducheine</title>
+  <meta name="description" content="How azine works: a weekly recommendation board for essays, movies, albums and novels. The summary, the stack, and the system documents.">
+  <meta property="og:title" content="azine · Kenedy Ducheine">
+  <meta property="og:description" content="How azine works: the summary, the stack, and the system documents.">
+  <link rel="icon" href="assets/favicon.png">
+
+  <!-- Fonts (same as index.html) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- All colors, fonts and sizes live in style.css -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ THE STRIP (same as the home page) ============ -->
+  <div class="strip">
+    <span>Master's student at Georgetown</span>
+    <span>Now making azine &amp; Grid Notes</span>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ============ THE MASTHEAD (same as the home page) ============ -->
+    <header class="masthead">
+      <a class="button" href="https://github.com/kenedyducheine">GitHub</a>
+      <p class="name"><a href="index.html">Kenedy Ducheine</a></p>
+      <a class="more masthead-right" href="https://azine.io">azine.io&nbsp;↗</a>
+    </header>
+
+    <!-- ============ THE NAV BAND ============ -->
+    <nav class="nav">
+      <a href="azine.html" aria-current="page">azine</a>
+      <a href="index.html#grid-notes">Grid Notes</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#about">About</a>
+      <a href="https://github.com/kenedyducheine">GitHub</a>
+    </nav>
+
+    <main>
+
+      <!-- ============ THE OPENING: the A, the title, one line, links ============ -->
+      <header class="feature-head">
+        <a class="cover" href="https://azine.io" aria-label="Open azine.io">
+          <svg viewBox="0 0 430 622" aria-hidden="true">
+            <path fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round" fill-rule="evenodd"
+              d="M158.4,6.0 L270.0,6.0 L423.6,616.0 L313.0,616.0 L283.9,502.0 L145.3,502.0 L116.0,616.0 L5.6,616.0 Z M214.5,228.8 L257.6,400.0 L170.8,400.0 Z"/>
+          </svg>
+        </a>
+        <div>
+          <p class="kicker">Now making</p>
+          <h1>azine</h1>
+          <p class="dek">A weekly recommendation board for essays, movies, albums and novels,
+            for people who are mad at ads, influencers and AI slop.</p>
+          <div class="links">
+            <a class="more" href="https://azine.io">Open azine.io&nbsp;↗</a>
+            <a class="more" href="#documents">The documents&nbsp;↓</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- ============ 1. THE SUMMARY ============
+           Each <p> is a paragraph; each <li> in the list is one step. -->
+      <section class="section" id="summary">
+        <h2 class="section-title"><span class="kicker">01</span>The summary</h2>
+        <div class="prose">
+          <p>Feeds are built to keep you scrolling, not to help you find anything good. azine is a
+            personal board of essays, movies, albums and novels, plus museum art, chosen for one person
+            from a few sentences about what they love and don't, and from how they sort each day's
+            picks. Every pick is a real work from a curated catalog, mostly from before 2021. No feeds,
+            no influencers, no AI-written content.</p>
+          <ol class="steps">
+            <li><strong>Describe your taste.</strong> The site opens on a wall of museum art, then a
+              handwritten note asking what you love and don't, in 20 words or more. Claude reads it
+              while you sign up.</li>
+            <li><strong>The board fills itself.</strong> Each work is described by its genres, subjects,
+              tones and synopsis. Your likes are grouped into as many taste clusters as you really have,
+              so a niche taste still gets its turn.</li>
+            <li><strong>Read, listen, watch.</strong> Today's picks, laid out as showcases, with a fresh
+              wall of art from the world's museums.</li>
+            <li><strong>Sort.</strong> Drag each pick to "loved it" or "not for me", or mark it
+              neutral. Every sort teaches the board what to bring next.</li>
+            <li><strong>It keeps going.</strong> Boxes renew on a cadence you set: essays daily, albums
+              every three days, movies and novels weekly.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ 2. THE STACK ============
+           One <tr> per row: <th> is the part, <td> is what it uses. -->
+      <section class="section" id="stack">
+        <h2 class="section-title"><span class="kicker">02</span>The stack</h2>
+        <table class="stack">
+          <tr><th>Server</th><td>Python 3.13, FastAPI, uvicorn, SQLAlchemy, Alembic, APScheduler, scikit-learn</td></tr>
+          <tr><th>Recommender</th><td>TF-IDF embeddings and taste clusters (after Pinterest's PinnerSage)</td></tr>
+          <tr><th>AI</th><td>The Claude API reads taste answers and labels new items. It never writes what you read.</td></tr>
+          <tr><th>Data</th><td>SQLite on a persistent disk, backed up daily</td></tr>
+          <tr><th>Front end</th><td>Server-rendered Jinja pages, vanilla JavaScript, one stylesheet, no build step</td></tr>
+          <tr><th>Hosting</th><td>Render (Docker), deployed on every push; azine.io on Cloudflare</td></tr>
+          <tr><th>Apps</th><td>An installable web app, and an iOS app (Capacitor) that shows the live site</td></tr>
+          <tr><th>Sources</th><td>OMDb, Google Books, Open Library, iTunes Search, Substack and essay feeds,
+            and museum collections (the Met, NGA, V&amp;A, Wikimedia Commons)</td></tr>
+        </table>
+      </section>
+
+      <!-- ============ 3. THE DOCUMENTS: the two PDFs ============
+           The files are in assets/: azine-summary.pdf and azine-architecture.pdf
+           (copies of docs/ in the azine repo). The pictures are their first pages. -->
+      <section class="section" id="documents">
+        <h2 class="section-title"><span class="kicker">03</span>The documents</h2>
+        <div class="docs">
+          <div class="doc-card">
+            <a class="doc-pic" href="assets/azine-summary.pdf">
+              <img src="assets/azine-summary.jpg" alt="azine system summary: how the site, the server, the recommender and the outside services fit together, on one page" loading="lazy">
+            </a>
+            <h3>System summary</h3>
+            <p>How azine works, on one page.</p>
+            <div class="links">
+              <a class="more" href="assets/azine-summary.pdf">Open&nbsp;↗</a>
+              <a class="more" href="assets/azine-summary.pdf" download>Download</a>
+            </div>
+          </div>
+          <div class="doc-card">
+            <a class="doc-pic" href="assets/azine-architecture.pdf">
+              <img src="assets/azine-architecture.jpg" alt="The first page of azine's architecture document" loading="lazy">
+            </a>
+            <h3>Architecture</h3>
+            <p>The full design, every part in detail, and the log of decisions behind it.</p>
+            <div class="links">
+              <a class="more" href="assets/azine-architecture.pdf">Open&nbsp;↗</a>
+              <a class="more" href="assets/azine-architecture.pdf" download>Download</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============ THE FOOTER ============ -->
+  <footer class="footer">
+    <div class="wrap">
+      <p class="sign"><a href="index.html">← Back to the front page</a></p>
+      <p class="byline">azine.io</p>
+    </div>
+  </footer>
+
+</body>
+</html>
