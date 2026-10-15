@@ -1,0 +1,168 @@
+/* =====================================================================
+   kenedyducheine.github.io -- the front page (index.html)
+
+   A top bar, then the page split in two: math on the left, computer
+   science on the right, each side scrolling on its own. On phones the
+   two sides become tabs.
+
+   To restyle: change the settings in :root right below.
+   (azine.html still uses style.css.)
+   ===================================================================== */
+
+:root {
+  /* ----- COLORS ----- */
+  --bg:     #FFF8F0;   /* the page */
+  --ink:    #111111;   /* titles and body text */
+  --muted:  #6F6A63;   /* the small labels: years, tools, tags */
+  --rule:   #E4DCD1;   /* the thin lines */
+  --accent: #B3001B;   /* links on hover, the active tab */
+
+  /* ----- FONTS ----- */
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* ----- SIZES ----- */
+  --edge: 40px;        /* space at the left and right edges of the page */
+  --top-height: auto;
+}
+
+/* ---------- basics ---------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 300 16px/1.6 var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+}
+a { color: inherit; text-decoration: none; transition: color 0.15s ease; }
+a:hover { color: var(--accent); }
+h1, h2, h3, p { margin: 0; }
+
+/* small labels: years, counts, tags, tabs, footer */
+.meta, .count, .tags, .tabs button, .foot, .links {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ================= TOP BAR ================= */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 36px var(--edge) 28px;
+  border-bottom: 1px solid var(--rule);
+}
+.name {
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+.intro { color: var(--muted); margin-top: 4px; }
+.links { display: flex; gap: 28px; color: var(--muted); }
+.links a:hover { color: var(--accent); }
+
+/* ================= THE SPLIT ================= */
+.split {
+  flex: 1;
+  min-height: 0;                 /* lets each side scroll inside the window */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.pane {
+  overflow-y: auto;
+  min-height: 0;
+  padding: 0 var(--edge) 64px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+.pane + .pane { border-left: 1px solid var(--rule); }
+
+/* the "Math 02" / "Computer science 06" heading; stays put while the side scrolls */
+.pane-head {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 26px 0 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--ink);
+}
+.pane-head h2 { font-size: 1.05rem; font-weight: 400; }
+.count { color: var(--muted); }
+
+/* ----- one project ----- */
+.project {
+  padding: 28px 0 30px;
+  border-bottom: 1px solid var(--rule);
+}
+.project:last-child { border-bottom: 0; }
+.meta { color: var(--muted); }
+.project h3 {
+  margin-top: 8px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.arrow { font-size: 0.8em; color: var(--muted); margin-left: 2px; }
+.project h3 a:hover .arrow { color: var(--accent); }
+.project > p:not(.meta) { margin-top: 10px; max-width: 36em; }
+.tags {
+  list-style: none; padding: 0; margin: 16px 0 0;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  color: var(--muted);
+}
+.tags li { border: 1px solid var(--rule); border-radius: 999px; padding: 3px 10px; }
+
+/* ================= FOOTER ================= */
+.foot {
+  display: flex; justify-content: space-between;
+  padding: 14px var(--edge);
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+}
+
+/* the tabs only appear on phones */
+.tabs { display: none; }
+
+/* ================= PHONES & SMALL SCREENS =================
+   The page scrolls normally; the Math / Computer science tabs pick a side. */
+@media (max-width: 820px) {
+  :root { --edge: 20px; }
+  html, body { height: auto; }
+  .top { flex-direction: column; align-items: flex-start; padding-top: 28px; }
+  .links { gap: 20px; }
+  .split { display: block; }
+  .pane { overflow: visible; padding-bottom: 32px; }
+  .pane + .pane { border-left: 0; }
+  .pane-head { display: none; }
+
+  .js .tabs {
+    display: flex;
+    position: sticky; top: 0; z-index: 2;
+    background: var(--bg);
+    border-bottom: 1px solid var(--ink);
+    padding: 0 var(--edge);
+  }
+  .tabs button {
+    flex: 1;
+    background: none; border: 0; cursor: pointer;
+    padding: 16px 0 14px;
+    color: var(--muted);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .js .pane:not(.is-active) { display: none; }
+  /* without JavaScript both sides simply stack, with their headings */
+  html:not(.js) .pane-head { display: flex; position: static; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

@@ -4,12 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The tab title and what search engines / link previews show -->
-  <title>Kenedy Ducheine (kenedyducheine) · azine, Grid Notes and projects</title>
-  <meta name="description" content="Kenedy Ducheine: master's student at Georgetown, maker of azine, a weekly recommendation board for essays, movies, albums and novels, and Grid Notes, a grid paper notes app for the iPad.">
+  <title>Kenedy Ducheine · math and computer science projects</title>
+  <meta name="description" content="Kenedy Ducheine: math and statistics master's student at Georgetown. Math projects on point processes and coding theory; computer science projects including azine, Grid Notes and Operation Negative One.">
   <meta property="og:title" content="Kenedy Ducheine">
-  <meta property="og:description" content="Math master's student at Georgetown. Making Azine and Grid Notes.">
-  <!-- the picture in link previews (texts, Slack, LinkedIn). "?v=2": bump it after replacing assets/og.jpg
-       so apps fetch the new picture instead of a saved copy -->
+  <meta property="og:description" content="Math and computer science projects. Master's student at Georgetown.">
+  <!-- the picture in link previews (texts, Slack, LinkedIn). "?v=2": bump it after replacing assets/og.jpg -->
   <meta property="og:image" content="https://kenedyducheine.github.io/assets/og.jpg?v=2">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1260">
@@ -18,8 +17,6 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- proves to Google Search Console that this site is yours; leave it in -->
   <meta name="google-site-verification" content="GAK5SVObGHcU2Spejn85u6rGJmn3wZU-S-5634LC5tg" />
-  <!-- For search engines: the official address of this page, and who the site is about
-       (your name, your handle, and your other pages: GitHub, LinkedIn, azine.io). -->
   <link rel="canonical" href="https://kenedyducheine.github.io/">
   <script type="application/ld+json">
   {
@@ -29,11 +26,8 @@
     "alternateName": "kenedyducheine",
     "url": "https://kenedyducheine.github.io/",
     "image": "https://kenedyducheine.github.io/assets/og.jpg",
-    "description": "Math master's student at Georgetown University. Creator of azine, a weekly recommendation board for essays, movies, albums and novels, and Grid Notes, a grid paper notes app for the iPad.",
-    "affiliation": {
-      "@type": "CollegeOrUniversity",
-      "name": "Georgetown University"
-    },
+    "description": "Math and statistics master's student at Georgetown University. Creator of azine, a weekly recommendation board for essays, movies, albums and novels, and Grid Notes, a grid paper notes app for the iPad.",
+    "affiliation": { "@type": "CollegeOrUniversity", "name": "Georgetown University" },
     "sameAs": [
       "https://github.com/kenedyducheine",
       "https://www.linkedin.com/in/kenedyducheine",
@@ -41,197 +35,149 @@
     ]
   }
   </script>
-  <!-- The browser-tab icon: the heart from the Azine Hand font (the owner's handwriting) -->
   <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
   <link rel="icon" href="assets/favicon.png?v=2" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2">
 
-  <!-- Fonts: Google Sans, IBM Plex Mono, IBM Plex Sans, Poppins.
-       Which font goes where is set in style.css (the FONTS settings). -->
+  <!-- Fonts: IBM Plex Sans (light + regular) for everything, IBM Plex Mono for the small labels.
+       To try another font, change the link below and --font-sans in home.css. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
-  <!-- All colors, fonts and sizes live in style.css (the settings at its top) -->
-  <!-- "?v=..." makes browsers fetch the new style.css right away after you change it:
-       bump the number (e.g. v=3) when you edit style.css -->
-  <link rel="stylesheet" href="style.css?v=5">
+  <!-- The look of this page lives in home.css (settings at its top). azine.html still uses style.css.
+       Bump ?v= after editing home.css so browsers fetch the new one. -->
+  <link rel="stylesheet" href="home.css?v=1">
 </head>
 <body>
 
-  <!-- ============ 1. THE STRIP: the thin colored band at the very top ============
-       Two short lines; edit the words between the <span> tags. -->
-  <div class="strip">
-    <span>Math master's student at Georgetown</span>
-    <span>Now making azine &amp; Grid Notes</span>
-  </div>
-
-  <div class="wrap">
-
-    <!-- ============ 2. THE MASTHEAD: the button on the left, your name, a link on the right ============ -->
-    <header class="masthead">
-      <a class="button" href="https://github.com/kenedyducheine">GitHub</a>          <!-- the dark box -->
-      <h1 class="name"><a href="index.html">Kenedy Ducheine</a></h1>                  <!-- the big name -->
-      <a class="more masthead-right" href="https://azine.io">azine.io&nbsp;↗</a>    <!-- the link on the right -->
-    </header>
-
-
-    <!-- ============ 4. THE SPREAD: left column, centerpiece, right column ============ -->
-    <main class="spread">
-
-      <!-- ===== CENTER: azine. The A on white; clicking it opens azine.html ===== -->
-      <section class="col-center">
-        <a class="cover" href="azine.html" aria-label="azine: read how it works">
-          <!-- azine's A, drawn as a shape so it stays sharp at any size.
-               Its color is --a-color in style.css. -->
-          <svg viewBox="0 0 430 622" aria-hidden="true">
-            <path fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round" fill-rule="evenodd"
-              d="M158.4,6.0 L270.0,6.0 L423.6,616.0 L313.0,616.0 L283.9,502.0 L145.3,502.0 L116.0,616.0 L5.6,616.0 Z M214.5,228.8 L257.6,400.0 L170.8,400.0 Z"/>
-          </svg>
-        </a>
-        <!-- the words under the A (delete this whole <div> to show only the A) -->
-        <div class="cover-caption">
-          <p class="kicker">Now making</p>
-          <h2><a href="azine.html">azine</a></h2>
-          <p class="dek">A weekly recommendation board for essays, movies, albums and novels.
-            No feeds, no influencers, no AI slop.</p>
-          <a class="more" href="azine.html">How it works&nbsp;→</a>
-        </div>
-      </section>
-
-      <!-- ===== LEFT: Grid Notes, then the letter ("Hi, I'm Kenedy") ===== -->
-      <section class="col-left">
-
-        <!-- Grid Notes (the "lead" card is a little bigger) -->
-        <article class="card lead" id="grid-notes">
-          <div class="card-pic">
-            <img src="assets/grid-notes.webp" alt="The Grid Notes app icon: GRID NOTES in cream letters on a navy arch over grid paper">
-          </div>
-          <p class="kicker">Better note taking app for iPad</p>
-          <h3>Grid Notes</h3>
-          <p>Grid paper with true to scale squares on iPadOS. Circle something to turn it into a sticker,
-            scribble to erase, and paper sizes designed for iPad. </p>
-          <p class="byline">2026 · Swift · Pending App Store release</p>
-        </article>
-
-        <!-- the letter: edit the words in each <p>; the list at the bottom is links -->
-        <div class="letter" id="about">
-          <p class="kicker">Editor's letter</p>
-          <h2>Hi, I'm Kenedy</h2>
-          <p>I'm a master's student at Georgetown. I created <a href="https://azine.io">azine</a>, a weekly
-            recommendation board for essays, movies, albums and novels. It's for people who are
-            mad at ads/influencers/AI slop.</p>
-          <p>I also created <a href="#grid-notes">Grid Notes</a>, a true to size grid paper note app.
-            I address every issue I have with other note apps. Namely, creating mini notes within
-            notes and no obnoxious scrolling.</p>
-          <!-- the list of links at the bottom of the letter -->
-          <ul class="elsewhere">
-            <li><a href="https://azine.io">azine.io <span>↗</span></a></li>
-            <li><a href="azine.html">How azine works <span>→</span></a></li>
-            <li><a href="https://github.com/kenedyducheine">GitHub <span>↗</span></a></li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- ===== RIGHT: the smaller projects =====
-           Each project is one <article class="card"> block: copy one to add a project.
-           Inside a card:  kicker = small red word, h3 = title, p = summary, byline = year · tools. -->
-      <section class="col-right">
-        <h2 class="col-title" id="projects">More projects</h2>   <!-- the heading over this column -->
-
-        <!-- the other projects: the pictures are public domain works from the Met (assets/art/) -->
-        <article class="card">
-          <a class="card-pic" href="https://github.com/kenedyducheine/statistical-crime-analysis">
-            <img src="assets/art/55433.webp" alt="Sudden Shower over Shin-Ōhashi Bridge and Atake, Utagawa Hiroshige, 1857" loading="lazy">
-          </a>
-          <p class="kicker">Point processes</p>
-          <h3><a href="https://github.com/kenedyducheine/statistical-crime-analysis">Statistical Crime Analysis</a></h3>
-          <p>For a class project, we were interested in analyzing the clustering behavior of crime in major cities. We specifically used the Poisson point process and Hawkes process
-            to determine how crime is clustered in NYC, Vancouver, and Chicago. We also determined to what degree a polynomial is best suited for clustering crime.</p>
-          <p class="byline">2026 · Python, R</p>
-        </article>
-
-        <article class="card">
-          <a class="card-pic" href="https://github.com/kenedyducheine/coding-theory-final-project">
-            <img src="assets/art/437654.webp" alt="Circus Sideshow, Georges Seurat, 1887–88" loading="lazy">
-          </a>
-          <p class="kicker">Coding theory</p>
-          <h3><a href="https://github.com/kenedyducheine/coding-theory-final-project">Reed-Muller Codes</a></h3>
-          <p>Encoding and decoding messages with Reed-Muller error-correcting codes, and watching how well
-            they hold up as the channel gets noisier.</p>
-          <p class="byline">2025 · Python</p>
-        </article>
-
-        <article class="card">
-          <a class="card-pic" href="https://github.com/kenedyducheine/Harris_and_Walz">
-            <img src="assets/art/435868.webp" alt="The Card Players, Paul Cézanne, 1890–92" loading="lazy">
-          </a>
-          <p class="kicker">Sentiment analysis</p>
-          <h3><a href="https://github.com/kenedyducheine/Harris_and_Walz">Harris &amp; Walz on Reddit</a></h3>
-          <p>89 days of posts from five political subreddits, read for what people said about the 2024
-            Democratic ticket: word clouds, sentiment over time and topic modeling.</p>
-          <p class="byline">2024 · Python</p>
-        </article>
-
-        <article class="card">
-          <a class="card-pic" href="https://github.com/kenedyducheine/colorblindpalette">
-            <img src="assets/art/436535.webp" alt="Wheat Field with Cypresses, Vincent van Gogh, 1889" loading="lazy">
-          </a>
-          <p class="kicker">An R package</p>
-          <h3><a href="https://github.com/kenedyducheine/colorblindpalette">colorblindpalette</a></h3>
-          <p>Color palettes that stay readable for people with red-green colorblindness.</p>
-          <p class="byline">2024 · R</p>
-        </article>
-
-        <article class="card">
-          <a class="card-pic" href="https://github.com/kenedyducheine/final_proj-datamining-">
-            <img src="assets/art/435844.webp" alt="The Musicians, Caravaggio, 1597" loading="lazy">
-          </a>
-          <p class="kicker">Data mining</p>
-          <h3><a href="https://github.com/kenedyducheine/final_proj-datamining-">Pop Song Streams</a></h3>
-          <p>Mining a dataset of pop songs and their streams: cleaning it up, an SVM model, word clouds
-            and a Shiny app.</p>
-          <p class="byline">2024 · R</p>
-        </article>
-
-      </section>
-
-    </main>
-  </div>
-
-  <!-- ============ 5. THE FOOTER ============ -->
-  <footer class="footer">
-    <div class="wrap">
-      <p class="sign">Thanks for stopping by <span class="heart" role="img" aria-label="heart"></span></p>   <!-- the heart is your handwriting; its color is --heart-color in style.css -->
-      <p class="byline">Art: The Metropolitan Museum of Art, Open Access</p>
+  <!-- ============ TOP BAR: your name on the left, links on the right ============ -->
+  <header class="top">
+    <div class="who">
+      <h1 class="name"><a href="index.html">Kenedy Ducheine</a></h1>
+      <p class="intro">Master's student in mathematics &amp; statistics at Georgetown.</p>
     </div>
+    <nav class="links" aria-label="Elsewhere">
+      <a href="https://github.com/kenedyducheine">GitHub</a>
+      <a href="https://www.linkedin.com/in/kenedyducheine">LinkedIn</a>
+      <a href="https://azine.io">azine.io</a>
+    </nav>
+  </header>
+
+  <!-- On phones the two sides become tabs; these buttons switch between them -->
+  <div class="tabs" role="tablist" aria-label="Project type">
+    <button role="tab" aria-selected="true"  data-pane="math">Math</button>
+    <button role="tab" aria-selected="false" data-pane="cs">Computer science</button>
+  </div>
+
+  <!-- ============ THE SPLIT: math on the left, computer science on the right ============
+       Each side scrolls on its own. Each project is one <article class="project"> block:
+       copy one to add a project.
+         .meta  = year · tools (top line, small)
+         h3     = title (a link if there is one)
+         p      = one or two sentences
+         .tags  = small labels (optional)            -->
+  <main class="split">
+
+    <!-- ===================== MATH ===================== -->
+    <section class="pane" id="math" aria-labelledby="math-title">
+      <header class="pane-head">
+        <h2 id="math-title">Math</h2>
+        <span class="count">02</span>
+      </header>
+
+      <article class="project">
+        <p class="meta">2026 · Python, R</p>
+        <h3><a href="https://github.com/kenedyducheine/statistical-crime-analysis">Statistical Crime Analysis <span class="arrow">↗</span></a></h3>
+        <p>How does crime cluster in major cities? We fit Poisson point processes and Hawkes
+          processes to crime data from New York, Vancouver and Chicago, and tested how well
+          polynomial intensities capture the clustering.</p>
+        <ul class="tags"><li>Point processes</li><li>Class project</li></ul>
+      </article>
+
+      <article class="project">
+        <p class="meta">2025 · Python</p>
+        <h3><a href="https://github.com/kenedyducheine/coding-theory-final-project">Reed-Muller Codes <span class="arrow">↗</span></a></h3>
+        <p>Encoding and decoding messages with Reed-Muller error-correcting codes, and measuring
+          how well they hold up as the channel gets noisier.</p>
+        <ul class="tags"><li>Coding theory</li></ul>
+      </article>
+    </section>
+
+    <!-- ===================== COMPUTER SCIENCE ===================== -->
+    <section class="pane" id="cs" aria-labelledby="cs-title">
+      <header class="pane-head">
+        <h2 id="cs-title">Computer science</h2>
+        <span class="count">06</span>
+      </header>
+
+      <article class="project">
+        <p class="meta">2026 · Python, JavaScript</p>
+        <h3><a href="azine.html">azine <span class="arrow">→</span></a></h3>
+        <p>A weekly recommendation board for essays, movies, albums and novels. No feeds,
+          no influencers, no AI slop.</p>
+        <ul class="tags"><li>Personal</li><li><a href="https://azine.io">azine.io ↗</a></li></ul>
+      </article>
+
+      <article class="project">
+        <p class="meta">2026 · Swift</p>
+        <h3>Grid Notes</h3>
+        <p>A note-taking app for iPad on grid paper with true-to-scale squares. Circle something
+          to turn it into a sticker, scribble to erase, and use paper sizes designed for iPad.</p>
+        <ul class="tags"><li>Personal</li><li>Pending App Store release</li></ul>
+      </article>
+
+      <article class="project">
+        <p class="meta">2026 · Python, Docker · Jetstream2</p>
+        <h3>Operation Negative One</h3>
+        <p>An AI agent that finds security vulnerabilities in deliberately vulnerable practice apps,
+          proves each one is reachable inside a sandbox, and writes a patch. A checker with no AI
+          in it confirms the fix works before anything is reported.</p>
+        <ul class="tags"><li>Group project</li><li>Deploying ML Applications</li><li>In progress</li></ul>
+      </article>
+
+      <article class="project">
+        <p class="meta">2024 · Python</p>
+        <h3><a href="https://github.com/kenedyducheine/Harris_and_Walz">Harris &amp; Walz on Reddit <span class="arrow">↗</span></a></h3>
+        <p>89 days of posts from five political subreddits, read for what people said about the
+          2024 Democratic ticket: word clouds, sentiment over time and topic modeling.</p>
+        <ul class="tags"><li>Sentiment analysis</li></ul>
+      </article>
+
+      <article class="project">
+        <p class="meta">2024 · R</p>
+        <h3><a href="https://github.com/kenedyducheine/colorblindpalette">colorblindpalette <span class="arrow">↗</span></a></h3>
+        <p>An R package of color palettes that stay readable for people with red-green colorblindness.</p>
+        <ul class="tags"><li>R package</li></ul>
+      </article>
+
+      <article class="project">
+        <p class="meta">2024 · R</p>
+        <h3><a href="https://github.com/kenedyducheine/final_proj-datamining-">Pop Song Streams <span class="arrow">↗</span></a></h3>
+        <p>Mining a dataset of pop songs and their streams: cleaning it up, an SVM model,
+          word clouds and a Shiny app.</p>
+        <ul class="tags"><li>Data mining</li></ul>
+      </article>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <span>© 2026 Kenedy Ducheine</span>
+    <span>Georgetown University</span>
   </footer>
 
-  <!-- Packs the spread: measures each card and sets how many 2px rows it spans,
-       so the projects fill the space under azine. Without it the page still works,
-       just with a few more gaps. -->
+  <!-- Phones only: the Math / Computer science tabs show one side at a time.
+       On wider screens both sides are always visible and this does nothing. -->
   <script>
-    const spread = document.querySelector('.spread');
-    const items = [...spread.querySelectorAll('.spread > section.col-center, .col-left > *, .col-right > *')];
-    const ROW = 2, GAP = 34;   /* GAP: the space under each item, in px */
-    function pack() {
-      const oneColumn = getComputedStyle(spread).gridTemplateColumns.split(' ').length < 2;
-      spread.classList.toggle('packed', !oneColumn);
-      for (const el of items) {
-        if (oneColumn) { el.style.gridRowEnd = ''; el.style.gridRowStart = ''; continue; }
-        const span = Math.ceil((el.getBoundingClientRect().height + GAP) / ROW);
-        el.style.gridRowEnd = 'span ' + span;
-      }
-      if (oneColumn) return;
-      // the letter starts where Grid Notes ends
-      const gridNotes = document.getElementById('grid-notes');
-      const letter = document.querySelector('.col-left .letter');
-      letter.style.gridRowStart = 1 + parseInt(gridNotes.style.gridRowEnd.slice(5));
+    const tabs = document.querySelectorAll('.tabs button');
+    function show(id) {
+      tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.pane === id));
+      document.querySelectorAll('.pane').forEach(p => p.classList.toggle('is-active', p.id === id));
     }
-    const watch = new ResizeObserver(() => requestAnimationFrame(pack));
-    items.forEach(el => watch.observe(el));
-    window.addEventListener('resize', pack);
-    pack();
+    tabs.forEach(t => t.addEventListener('click', () => { show(t.dataset.pane); window.scrollTo(0, 0); }));
+    show('math');
+    document.documentElement.classList.add('js');
   </script>
 </body>
 </html>
