@@ -103,8 +103,6 @@ h1, h2, h3, p { margin: 0; }
 }
 .project:last-child { border-bottom: 0; }
 .meta { color: var(--muted); }
-/* a small app icon at the top of a project (Grid Paper Notes) */
-.app-icon { display: block; width: 64px; height: 64px; border-radius: 14px; margin-bottom: 14px; box-shadow: 0 0 0 1px var(--rule); }
 .project h3 {
   margin-top: 8px;
   font-size: 1.4rem;
