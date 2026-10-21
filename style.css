@@ -110,7 +110,7 @@ a { color: inherit; text-decoration: none; }
 .masthead { border-bottom: 3px solid var(--rule); }
 
 /* ================= 4. THE SPREAD =================
-   Four columns: Grid Notes and the letter in the first, azine across the
+   Four columns: Grid Paper Notes and the letter in the first, azine across the
    middle two, the smaller projects in the last. Projects that don't fit on
    the right fill in the space under azine and the letter, so the page stays
    short. (A small script at the bottom of index.html packs them tightly.) */
@@ -124,8 +124,8 @@ a { color: inherit; text-decoration: none; }
   align-items: start;
 }
 .col-left, .col-right { display: contents; }   /* their cards sit straight on the spread */
-#grid-notes   { grid-column: 1; grid-row: 1; }       /* Grid Notes: first column, top */
-.col-left .letter { grid-column: 1; grid-row: 2; }   /* the letter: under Grid Notes */
+#grid-notes   { grid-column: 1; grid-row: 1; }       /* Grid Paper Notes: first column, top */
+.col-left .letter { grid-column: 1; grid-row: 2; }   /* the letter: under Grid Paper Notes */
 .col-center   { grid-column: 2 / 4; grid-row: 1 / 3; } /* azine: the middle two columns */
 .col-title    { grid-column: 4; grid-row: 1; }       /* "MORE PROJECTS": last column, top */
 .col-right .card { grid-column: span 1; }            /* each project: one column, wherever there's room */
@@ -154,7 +154,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -0.02em;
 }
 .card p { margin: 10px 0 0; font-size: 0.98rem; }
-.card.lead h3 { font-size: 2.3rem; }   /* the first card (Grid Notes) is bigger */
+.card.lead h3 { font-size: 2.3rem; }   /* the first card (Grid Paper Notes) is bigger */
 
 /* ----- the centerpiece: azine's A on white ----- */
 .cover {
@@ -249,7 +249,7 @@ a { color: inherit; text-decoration: none; }
 /* ================= 7. PHONES & SMALL SCREENS ================= */
 @media (max-width: 1000px) {
   :root { --gutter: 22px; }
-  /* one column: azine first, then Grid Notes and the letter, then the projects */
+  /* one column: azine first, then Grid Paper Notes and the letter, then the projects */
   .spread { grid-template-columns: 1fr; }
   .spread > *, .col-left > *, .col-right > * { grid-column: 1 !important; grid-row: auto !important; }
   .col-center { order: -1; }
