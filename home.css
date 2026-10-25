@@ -66,6 +66,7 @@ h1, h2, h3, p { margin: 0; }
   line-height: 1.2;
 }
 .intro { color: var(--muted); margin-top: 4px; }
+.intro + .intro { margin-top: 0; }
 .links { display: flex; gap: 28px; color: var(--muted); }
 .links a:hover { color: var(--accent); }
 
