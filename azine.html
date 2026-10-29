@@ -27,7 +27,7 @@
     "alternateName": "kenedyducheine",
     "url": "https://kenedyducheine.github.io/",
     "image": "https://kenedyducheine.github.io/assets/og.jpg",
-    "description": "Math master's student at Georgetown University. Creator of azine, a curated catalog of essays, movies, albums and novels free of AI slop, and Grid Paper Notes, a grid paper notes app for the iPad.",
+    "description": "Math and statistics master's student at Georgetown University. Creator of azine, a curated catalog of essays, movies, albums and novels free of AI slop, and Grid Paper Notes, a grid paper notes app for the iPad.",
     "affiliation": {
       "@type": "CollegeOrUniversity",
       "name": "Georgetown University"
@@ -39,148 +39,130 @@
     ]
   }
   </script>
-  <!-- The browser-tab icon: the heart from the Azine Hand font (the owner's handwriting) -->
   <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
   <link rel="icon" href="assets/favicon.png?v=2" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2">
 
-  <!-- Fonts (same as index.html) -->
+  <!-- Fonts and look: the same as the front page (home.css, "SINGLE PAGES" section at the bottom).
+       Bump ?v= after editing home.css so browsers fetch the new one. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-  <!-- All colors, fonts and sizes live in style.css -->
-  <!-- "?v=..." makes browsers fetch the new style.css right away after you change it:
-       bump the number (e.g. v=3) when you edit style.css -->
-  <link rel="stylesheet" href="style.css?v=5">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="home.css?v=6">
 </head>
-<body>
+<body class="page">
 
-  <!-- ============ THE STRIP (same as the home page) ============ -->
-  <div class="strip">
-    <span>Master's student at Georgetown</span>
-    <span>Now making azine &amp; Grid Paper Notes</span>
-  </div>
-
-  <div class="wrap">
-
-    <!-- ============ THE MASTHEAD (same as the home page) ============ -->
-    <header class="masthead">
-      <a class="button" href="https://github.com/kenedyducheine">GitHub</a>
+  <!-- ============ TOP BAR (same as the front page) ============ -->
+  <header class="top">
+    <div class="who">
       <p class="name"><a href="index.html">Kenedy Ducheine</a></p>
-      <a class="more masthead-right" href="https://azine.io">azine.io&nbsp;↗</a>
+      <p class="intro">Master's student in mathematics &amp; statistics at Georgetown.</p>
+      <p class="intro">B.S. in Data Science from the University of South Florida.</p>
+    </div>
+    <nav class="links" aria-label="Elsewhere">
+      <a href="https://github.com/kenedyducheine">GitHub</a>
+      <a href="https://www.linkedin.com/in/kenedyducheine">LinkedIn</a>
+      <a href="https://azine.io">azine.io</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============ THE OPENING: laid out like a project on the front page ============ -->
+    <header class="lead">
+      <p class="meta"><a class="back" href="index.html">← Projects</a> · 2026 · Python, JavaScript</p>
+      <h1>azine</h1>
+      <p>A curated catalog of essays, movies, albums and novels, free of AI slop, for enjoying
+        the skill of essayists, film teams, novelists and musicians.</p>
+      <ul class="tags"><li><a href="https://azine.io">Open azine.io ↗</a></li><li><a href="#documents">The documents ↓</a></li></ul>
     </header>
 
-
-    <main>
-
-      <!-- ============ THE OPENING: the A, the title, one line, links ============ -->
-      <header class="feature-head">
-        <a class="cover" href="https://azine.io" aria-label="Open azine.io">
-          <svg viewBox="0 0 430 622" aria-hidden="true">
-            <path fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round" fill-rule="evenodd"
-              d="M158.4,6.0 L270.0,6.0 L423.6,616.0 L313.0,616.0 L283.9,502.0 L145.3,502.0 L116.0,616.0 L5.6,616.0 Z M214.5,228.8 L257.6,400.0 L170.8,400.0 Z"/>
-          </svg>
-        </a>
-        <div>
-          <p class="kicker">Now making</p>
-          <h1>azine</h1>
-          <p class="dek">A curated catalog of essays, movies, albums and novels, free of AI slop,
-            for enjoying the skill of essayists, film teams, novelists and musicians.</p>
-          <div class="links">
-            <a class="more" href="https://azine.io">Open azine.io&nbsp;↗</a>
-            <a class="more" href="#documents">The documents&nbsp;↓</a>
-          </div>
-        </div>
+    <!-- ============ 1. THE SUMMARY ============
+         Each <p> is a paragraph; each <li> in the list is one step. -->
+    <section class="section" id="summary" aria-labelledby="summary-title">
+      <header class="pane-head">
+        <h2 id="summary-title">The summary</h2>
+        <span class="count">01</span>
       </header>
+      <div class="body">
+        <p>Feeds are built to keep you scrolling, not to help you find anything good. azine is a
+          curated catalog of essays, movies, albums and novels, made for enjoying the skill of
+          essayists, film teams, novelists and musicians. Every work is real, drawn from lists of
+          acclaimed work, mostly from before 2021 (plus festival films from 2022 on), and the catalog
+          is the same for everyone. No accounts, no feeds, no influencers, no AI slop.</p>
+        <ol class="steps">
+          <li><span><strong>Pick a category.</strong> E, M, A and N sit in the corners of the front page:
+            essays, movies, albums and novels. Click one to open its catalog.</span></li>
+          <li><span><strong>Pick a time.</strong> A timeline narrows the catalog to when the work was
+            made.</span></li>
+          <li><span><strong>Say what you want.</strong> Type it into "Vibes", like "I want to read about
+            x". A Claude API call reads it and filters the catalog down to the works that really fit,
+            best first. A wall of art from the Met fills the screen while it runs.</span></li>
+          <li><span><strong>Browse what's nearby.</strong> Each category is sorted into groups of similar
+            work, named for what they share.</span></li>
+        </ol>
+      </div>
+    </section>
 
-      <!-- ============ 1. THE SUMMARY ============
-           Each <p> is a paragraph; each <li> in the list is one step. -->
-      <section class="section" id="summary">
-        <h2 class="section-title"><span class="kicker">01</span>The summary</h2>
-        <div class="prose">
-          <p>Feeds are built to keep you scrolling, not to help you find anything good. azine is a
-            curated catalog of essays, movies, albums and novels, made for enjoying the skill of
-            essayists, film teams, novelists and musicians. Every work is real, drawn from lists of
-            acclaimed work, mostly from before 2021 (plus festival films from 2022 on), and the catalog
-            is the same for everyone. No accounts, no feeds, no influencers, no AI slop.</p>
-          <ol class="steps">
-            <li><strong>Pick a category.</strong> E, M, A and N sit in the corners of the front page:
-              essays, movies, albums and novels. Click one to open its catalog.</li>
-            <li><strong>Pick a time.</strong> A timeline narrows the catalog to when the work was
-              made.</li>
-            <li><strong>Say what you want.</strong> Type it into "Vibes", like "I want to read about
-              x". A Claude API call reads it and filters the catalog down to the works that really fit,
-              best first. A wall of art from the Met fills the screen while it runs.</li>
-            <li><strong>Browse what's nearby.</strong> Each category is sorted into groups of similar
-              work, named for what they share.</li>
-          </ol>
-        </div>
-      </section>
+    <!-- ============ 2. THE STACK ============
+         One <tr> per row: <th> is the part, <td> is what it uses. -->
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <header class="pane-head">
+        <h2 id="stack-title">The stack</h2>
+        <span class="count">02</span>
+      </header>
+      <table class="stack">
+        <tr><th>Server</th><td>Python 3.13, FastAPI, uvicorn, SQLAlchemy, Alembic, APScheduler, scikit-learn</td></tr>
+        <tr><th>Search</th><td>Claude Sonnet turns the prompt into a plan; TF-IDF embeddings gather candidates,
+          each part of the prompt getting its share (after Pinterest's PinnerSage); Claude Haiku scores
+          each one, and only a 75%+ fit comes back</td></tr>
+        <tr><th>Groups</th><td>k-means over the same embeddings, each group named from the labels it shares</td></tr>
+        <tr><th>AI</th><td>The Claude API filters the catalog by what you type and labels new works. It never writes what you read.</td></tr>
+        <tr><th>Catalog</th><td>Rolling Stone's 500 Greatest Albums and BBC Music Magazine's classical picks;
+          films from 1940 to 2021, plus festival films (Cannes, Sundance, Toronto, Hong Kong); novels
+          from 1850 on; essays from the Longform archive and the National Magazine Awards</td></tr>
+        <tr><th>Data</th><td>SQLite on a persistent disk, backed up daily</td></tr>
+        <tr><th>Front end</th><td>Server-rendered Jinja pages, vanilla JavaScript, one stylesheet, no build step</td></tr>
+        <tr><th>Hosting</th><td>Render (Docker), deployed on every push; azine.io on Cloudflare</td></tr>
+        <tr><th>Apps</th><td>An installable web app</td></tr>
+        <tr><th>Sources</th><td>OMDb, Google Books, Open Library, iTunes Search, Substack and essay feeds,
+          the Library of Congress, and the Met's open-access art</td></tr>
+      </table>
+    </section>
 
-      <!-- ============ 2. THE STACK ============
-           One <tr> per row: <th> is the part, <td> is what it uses. -->
-      <section class="section" id="stack">
-        <h2 class="section-title"><span class="kicker">02</span>The stack</h2>
-        <table class="stack">
-          <tr><th>Server</th><td>Python 3.13, FastAPI, uvicorn, SQLAlchemy, Alembic, APScheduler, scikit-learn</td></tr>
-          <tr><th>Search</th><td>Claude Sonnet turns the prompt into a plan; TF-IDF embeddings gather candidates,
-            each part of the prompt getting its share (after Pinterest's PinnerSage); Claude Haiku scores
-            each one, and only a 75%+ fit comes back</td></tr>
-          <tr><th>Groups</th><td>k-means over the same embeddings, each group named from the labels it shares</td></tr>
-          <tr><th>AI</th><td>The Claude API filters the catalog by what you type and labels new works. It never writes what you read.</td></tr>
-          <tr><th>Catalog</th><td>Rolling Stone's 500 Greatest Albums and BBC Music Magazine's classical picks;
-            films from 1940 to 2021, plus festival films (Cannes, Sundance, Toronto, Hong Kong); novels
-            from 1850 on; essays from the Longform archive and the National Magazine Awards</td></tr>
-          <tr><th>Data</th><td>SQLite on a persistent disk, backed up daily</td></tr>
-          <tr><th>Front end</th><td>Server-rendered Jinja pages, vanilla JavaScript, one stylesheet, no build step</td></tr>
-          <tr><th>Hosting</th><td>Render (Docker), deployed on every push; azine.io on Cloudflare</td></tr>
-          <tr><th>Apps</th><td>An installable web app</td></tr>
-          <tr><th>Sources</th><td>OMDb, Google Books, Open Library, iTunes Search, Substack and essay feeds,
-            the Library of Congress, and the Met's open-access art</td></tr>
-        </table>
-      </section>
+    <!-- ============ 3. THE DOCUMENTS: the two PDFs ============
+         The files are in assets/: azine-summary.pdf and azine-architecture.pdf
+         (copies of docs/ in the azine repo). The pictures are their first pages. -->
+    <section class="section" id="documents" aria-labelledby="documents-title">
+      <header class="pane-head">
+        <h2 id="documents-title">The documents</h2>
+        <span class="count">03</span>
+      </header>
+      <div class="body docs">
+        <article class="doc">
+          <a class="doc-pic" href="assets/azine-summary.pdf">
+            <img src="assets/azine-summary.jpg" alt="azine system summary: how the site, the server, the recommender and the outside services fit together, on one page" loading="lazy">
+          </a>
+          <h3>System summary</h3>
+          <p>How azine works, on one page.</p>
+          <ul class="tags"><li><a href="assets/azine-summary.pdf">Open ↗</a></li><li><a href="assets/azine-summary.pdf" download>Download</a></li></ul>
+        </article>
+        <article class="doc">
+          <a class="doc-pic" href="assets/azine-architecture.pdf">
+            <img src="assets/azine-architecture.jpg" alt="The first page of azine's architecture document" loading="lazy">
+          </a>
+          <h3>Architecture</h3>
+          <p>The full design, every part in detail, and the log of decisions behind it.</p>
+          <ul class="tags"><li><a href="assets/azine-architecture.pdf">Open ↗</a></li><li><a href="assets/azine-architecture.pdf" download>Download</a></li></ul>
+        </article>
+      </div>
+    </section>
 
-      <!-- ============ 3. THE DOCUMENTS: the two PDFs ============
-           The files are in assets/: azine-summary.pdf and azine-architecture.pdf
-           (copies of docs/ in the azine repo). The pictures are their first pages. -->
-      <section class="section" id="documents">
-        <h2 class="section-title"><span class="kicker">03</span>The documents</h2>
-        <div class="docs">
-          <div class="doc-card">
-            <a class="doc-pic" href="assets/azine-summary.pdf">
-              <img src="assets/azine-summary.jpg" alt="azine system summary: how the site, the server, the recommender and the outside services fit together, on one page" loading="lazy">
-            </a>
-            <h3>System summary</h3>
-            <p>How azine works, on one page.</p>
-            <div class="links">
-              <a class="more" href="assets/azine-summary.pdf">Open&nbsp;↗</a>
-              <a class="more" href="assets/azine-summary.pdf" download>Download</a>
-            </div>
-          </div>
-          <div class="doc-card">
-            <a class="doc-pic" href="assets/azine-architecture.pdf">
-              <img src="assets/azine-architecture.jpg" alt="The first page of azine's architecture document" loading="lazy">
-            </a>
-            <h3>Architecture</h3>
-            <p>The full design, every part in detail, and the log of decisions behind it.</p>
-            <div class="links">
-              <a class="more" href="assets/azine-architecture.pdf">Open&nbsp;↗</a>
-              <a class="more" href="assets/azine-architecture.pdf" download>Download</a>
-            </div>
-          </div>
-        </div>
-      </section>
+  </main>
 
-    </main>
-  </div>
-
-  <!-- ============ THE FOOTER ============ -->
-  <footer class="footer">
-    <div class="wrap">
-      <p class="sign"><a href="index.html">←</a></p>
-      <p class="byline">azine.io</p>
-    </div>
+  <footer class="foot">
+    <a href="index.html">← All projects</a>
+    <span>azine.io</span>
   </footer>
 
 </body>

@@ -167,3 +167,79 @@ h1, h2, h3, p { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* =====================================================================
+   SINGLE PAGES (azine.html): the same top bar and footer as the front
+   page, then one column of sections that scrolls normally.
+   ===================================================================== */
+body.page { height: auto; min-height: 100%; }
+.page main {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  padding: 0 var(--edge) 72px;
+}
+.back { color: var(--muted); }
+.back:hover { color: var(--accent); }
+
+/* the opening: same parts as a project on the front page, a little bigger */
+.lead { padding: 40px 0 36px; }
+.lead h1 {
+  margin-top: 8px;
+  font-size: 2.4rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.lead > p:not(.meta) { margin-top: 12px; max-width: 34em; font-size: 1.1rem; }
+
+/* each section's heading: like "Math 02" on the front page */
+.section .pane-head { position: static; }
+.section .body { padding-top: 24px; }
+.section p + p, .section p + ol { margin-top: 14px; }
+.section { margin-bottom: 24px; }
+
+/* the numbered steps */
+.steps { margin: 18px 0 0; padding: 0; list-style: none; counter-reset: step; }
+.steps li {
+  counter-increment: step;
+  display: grid; grid-template-columns: 2.5em 1fr;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+}
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  font: 400 0.72rem/2.2 var(--font-mono);
+  color: var(--muted);
+}
+.steps strong { font-weight: 500; }
+
+/* the stack: part on the left, what it uses on the right */
+.stack { width: 100%; border-collapse: collapse; }
+.stack th, .stack td {
+  text-align: left; vertical-align: top;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.stack tr:last-child th, .stack tr:last-child td { border-bottom: 0; }
+.stack th {
+  width: 9em; padding-right: 16px;
+  font: 400 0.72rem/2.2 var(--font-mono);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* the documents: two cards side by side */
+.docs { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.doc-pic { display: block; border: 1px solid var(--rule); transition: border-color 0.15s ease; }
+.doc-pic:hover { border-color: var(--ink); }
+.doc-pic img { display: block; width: 100%; height: auto; aspect-ratio: 935 / 1210; }
+.doc h3 { margin-top: 14px; font-size: 1.1rem; font-weight: 400; }
+.doc p { color: var(--muted); margin-top: 2px; }
+
+@media (max-width: 820px) {
+  .lead { padding-top: 28px; }
+  .lead h1 { font-size: 2rem; }
+  .stack th { width: 6.5em; }
+  .docs { grid-template-columns: 1fr; gap: 28px; }
+}
